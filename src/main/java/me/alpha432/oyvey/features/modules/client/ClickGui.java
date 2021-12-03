@@ -10,6 +10,7 @@ import me.alpha432.oyvey.features.setting.Setting;
 import me.alpha432.oyvey.util.ColorUtil;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 
@@ -24,9 +25,9 @@ public class ClickGui
 
 
     public Setting<Float> fov = this.register(new Setting<>("Fov", 150.0f, -180.0f, 180.0f));
-    public Setting<Integer> red = this.register(new Setting<>("Red", 95, 0, 255));
-    public Setting<Integer> green = this.register(new Setting<>("Green", 0, 0, 255));
-    public Setting<Integer> blue = this.register(new Setting<>("Blue", 255, 0, 255));
+    public Setting<Integer> red = this.register(new Setting<>("Red", 190, 0, 255));
+    public Setting<Integer> green = this.register(new Setting<>("Green", 40, 0, 255));
+    public Setting<Integer> blue = this.register(new Setting<>("Blue", 40, 0, 255));
     public Setting<Integer> hoverAlpha = this.register(new Setting<>("Alpha", 180, 0, 255));
     public Setting<Integer> alpha = this.register(new Setting<>("HoverAlpha", 240, 0, 255));
 
@@ -45,6 +46,7 @@ public class ClickGui
     public ClickGui() {
         super("ClickGui", "Opens the ClickGui", Module.Category.CLIENT, true, false, false);
         this.setInstance();
+        setBind(Keyboard.KEY_RSHIFT);
     }
 
     public static ClickGui getInstance() {

@@ -33,7 +33,7 @@ public class OyVeyGui
     private final ArrayList<Component> components = new ArrayList<>();
     public static ParticleGenerator particleGenerator = new ParticleGenerator(200, mc.displayWidth, mc.displayHeight);
     private final ArrayList<Snow> _snowList = new ArrayList<>();
-    int color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().green.getValue()).getRGB();
+    int color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue()).getRGB();
 
 
     public OyVeyGui() {

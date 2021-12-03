@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class Logo extends Module {
-    public static final ResourceLocation mark = new ResourceLocation("/assets/nigger/icons/incoming.png");
+    public static final ResourceLocation mark = new ResourceLocation("textures/incoming zero.png");
     public Setting<Integer> imageX;
     public Setting<Integer> imageY;
     public Setting<Integer> imageWidth;
@@ -18,10 +18,10 @@ public class Logo extends Module {
 
     public Logo() {
         super("Logo", "Puts a logo there (there)", Category.CLIENT, false, false, false);
-        this.imageX = this.register(new Setting("WatermarkX", 0, 0, 300));
-        this.imageY = this.register(new Setting("WatermarkY", 0, 0, 300));
-        this.imageWidth = this.register(new Setting("WatermarkWidth", 97, 0, 1000));
-        this.imageHeight = this.register(new Setting("WatermarkHeight", 97, 0, 1000));
+        this.imageX = this.register(new Setting("WatermarkX", 6, 0, 300));
+        this.imageY = this.register(new Setting("WatermarkY", 40, 0, 300));
+        this.imageWidth = this.register(new Setting("WatermarkWidth", 50, 0, 1000));
+        this.imageHeight = this.register(new Setting("WatermarkHeight", 50, 0, 1000));
 
     }
 
