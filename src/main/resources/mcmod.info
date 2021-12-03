@@ -1,0 +1,17 @@
+[
+  {
+    "modid": "incoming",
+    "name": "Incoming",
+    "description": "uwu huh",
+    "version": "1.2.6",
+    "mcversion": "1.12.2",
+    "logoFile": "incoming.png",
+    "url": "https://youtube.com/nigger/",
+    "updateUrl": "",
+    "authorList": [
+      "OP_Killaura"
+    ],
+    "screenshots": [],
+    "dependencies": []
+  }
+]
