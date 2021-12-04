@@ -41,7 +41,7 @@ public class PopCounter
         TotemPopContainer.remove(player.getName());
         if (l_Count == 1) {
             if (ModuleTools.getInstance().isEnabled()) {
-                switch (ModuleTools.getInstance().popNotifier.getValue()) {
+                switch (ModuleTools.getInstance().popNotifier.getValue(true)) {
                     case FUTURE: {
                         String text = ChatFormatting.RED + "[Future] " + ChatFormatting.GREEN + player.getName() + ChatFormatting.GRAY + " died after popping " + ChatFormatting.GREEN + l_Count + ChatFormatting.GRAY + " totem.";
                         return text;
@@ -65,7 +65,7 @@ public class PopCounter
             }
         } else {
             if (ModuleTools.getInstance().isEnabled()) {
-                switch (ModuleTools.getInstance().popNotifier.getValue()) {
+                switch (ModuleTools.getInstance().popNotifier.getValue(true)) {
                     case FUTURE: {
                         String text = ChatFormatting.RED + "[Future] " + ChatFormatting.GREEN + player.getName() + ChatFormatting.GRAY + " died after popping " + ChatFormatting.GREEN + l_Count + ChatFormatting.GRAY + " totems.";
                         return text;
@@ -114,7 +114,7 @@ public class PopCounter
         }
         if (l_Count == 1) {
             if (ModuleTools.getInstance().isEnabled()) {
-                switch (ModuleTools.getInstance().popNotifier.getValue()) {
+                switch (ModuleTools.getInstance().popNotifier.getValue(true)) {
                     case FUTURE: {
                         String text = ChatFormatting.RED + "[Future] " + ChatFormatting.GREEN + player.getName() + ChatFormatting.GRAY + " just popped " + ChatFormatting.GREEN + l_Count + ChatFormatting.GRAY + " totem.";
                         return text;
@@ -136,7 +136,7 @@ public class PopCounter
             }
         } else {
             if (ModuleTools.getInstance().isEnabled()) {
-                switch (ModuleTools.getInstance().popNotifier.getValue()) {
+                switch (ModuleTools.getInstance().popNotifier.getValue(true)) {
                     case FUTURE: {
                         String text = ChatFormatting.RED + "[Future] " + ChatFormatting.GREEN + player.getName() + ChatFormatting.GRAY + " just popped " + ChatFormatting.GREEN + l_Count + ChatFormatting.GRAY + " totems.";
                         return text;

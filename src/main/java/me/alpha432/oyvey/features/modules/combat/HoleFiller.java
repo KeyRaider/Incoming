@@ -32,11 +32,11 @@ public class HoleFiller extends Module {
     private final Setting<Boolean> smart = (Setting<Boolean>) this.register(new Setting<>("Smart", false));
     private final Setting<Double> smartRange = (Setting<Double>) this.register(new Setting<>("Smart Range", 4.0, 0.1, 6.0));
     private final Setting<Boolean> rainbow = register(new Setting<>("Rainbow", false));
-    private final Setting<Integer> red = register(new Setting("Red", 0, 0, 255, v -> !this.rainbow.getValue()));
-    private final Setting<Integer> green = register(new Setting("Green", 255, 0, 255, v -> !this.rainbow.getValue()));
-    private final Setting<Integer> blue = register(new Setting("Blue", 0, 0, 255, v -> !this.rainbow.getValue()));
-    private final Setting<Integer> alpha = register(new Setting("Alpha", 0, 0, 255, v -> !this.rainbow.getValue()));
-    private final Setting<Integer> outlineAlpha = register(new Setting("OL-Alpha", 0, 0, 255, v -> !this.rainbow.getValue()));
+    private final Setting<Integer> red = register(new Setting("Red", 0, 0, 255, v -> !this.rainbow.getValue(true)));
+    private final Setting<Integer> green = register(new Setting("Green", 255, 0, 255, v -> !this.rainbow.getValue(true)));
+    private final Setting<Integer> blue = register(new Setting("Blue", 0, 0, 255, v -> !this.rainbow.getValue(true)));
+    private final Setting<Integer> alpha = register(new Setting("Alpha", 0, 0, 255, v -> !this.rainbow.getValue(true)));
+    private final Setting<Integer> outlineAlpha = register(new Setting("OL-Alpha", 0, 0, 255, v -> !this.rainbow.getValue(true)));
     private BlockPos render;
     private EntityPlayer closestTarget;
     private static boolean isSpoofingAngles;
@@ -75,7 +75,7 @@ public class HoleFiller extends Module {
         if (HoleFiller.mc.world == null) {
             return;
         }
-        if (this.smart.getValue()) {
+        if (this.smart.getValue(true)) {
             this.findClosestTarget();
         }
         List<BlockPos> blocks = findCrystalBlocks();
@@ -96,7 +96,7 @@ public class HoleFiller extends Module {
             if (!HoleFiller.mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(blockPos)).isEmpty()) {
                 continue;
             }
-            if (this.smart.getValue() && this.isInRange(blockPos)) {
+            if (this.smart.getValue(true) && this.isInRange(blockPos)) {
                 q = blockPos;
             } else {
                 q = blockPos;
@@ -119,7 +119,7 @@ public class HoleFiller extends Module {
     @Override
     public void onRender3D(final Render3DEvent event) {
         if (this.render != null) {
-            RenderUtil.drawBoxESP(this.render, rainbow.getValue() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue()) : new Color(red.getValue(), green.getValue(), blue.getValue(), outlineAlpha.getValue()), 3.5F, true, true, alpha.getValue());
+            RenderUtil.drawBoxESP(this.render, rainbow.getValue(true) ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue(true)) : new Color(red.getValue(true), green.getValue(true), blue.getValue(true), outlineAlpha.getValue(true)), 3.5F, true, true, alpha.getValue(true));
         }
     }
 
@@ -175,20 +175,20 @@ public class HoleFiller extends Module {
     private boolean isInRange(BlockPos blockPos) {
         NonNullList<BlockPos> positions = NonNullList.create();
         positions.addAll(
-                getSphere(getPlayerPos(), range.getValue().floatValue(), range.getValue().intValue(), false, true, 0)
+                getSphere(getPlayerPos(), range.getValue(true).floatValue(), range.getValue(true).intValue(), false, true, 0)
                         .stream().filter(this::IsHole).collect(Collectors.toList()));
         return positions.contains(blockPos);
     }
 
     private List<BlockPos> findCrystalBlocks() {
         NonNullList<BlockPos> positions = NonNullList.create();
-        if (smart.getValue() && closestTarget != null)
+        if (smart.getValue(true) && closestTarget != null)
             positions.addAll(
-                    getSphere(getClosestTargetPos(), smartRange.getValue().floatValue(), range.getValue().intValue(), false, true, 0)
+                    getSphere(getClosestTargetPos(), smartRange.getValue(true).floatValue(), range.getValue(true).intValue(), false, true, 0)
                             .stream().filter(this::IsHole).filter(this::isInRange).collect(Collectors.toList()));
-        else if (!smart.getValue())
+        else if (!smart.getValue(true))
             positions.addAll(
-                    getSphere(getPlayerPos(), range.getValue().floatValue(), range.getValue().intValue(), false, true, 0)
+                    getSphere(getPlayerPos(), range.getValue(true).floatValue(), range.getValue(true).intValue(), false, true, 0)
                             .stream().filter(this::IsHole).collect(Collectors.toList()));
         return positions;
     }

@@ -24,7 +24,7 @@ extends Module {
 
     @Override
     public void onUpdate() {
-        if (this.mode.getValue() == Mode.Book && BookCrash.mc.world != null && BookCrash.mc.player != null) {
+        if (this.mode.getValue(true) == Mode.Book && BookCrash.mc.world != null && BookCrash.mc.player != null) {
             int i;
             ItemStack book = new ItemStack(Items.WRITABLE_BOOK);
             NBTTagList list = new NBTTagList();

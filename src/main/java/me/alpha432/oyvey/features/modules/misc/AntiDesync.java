@@ -30,7 +30,7 @@ extends Module {
     @SubscribeEvent
     public void onPacketReceive(PacketEvent event) {
         SPacketSoundEffect packet;
-        if (this.crystal.getValue().booleanValue() && event.getPacket() instanceof SPacketSoundEffect && (packet = (SPacketSoundEffect)event.getPacket()).getCategory() == SoundCategory.BLOCKS && packet.getSound() == SoundEvents.ENTITY_GENERIC_EXPLODE) {
+        if (this.crystal.getValue(true).booleanValue() && event.getPacket() instanceof SPacketSoundEffect && (packet = (SPacketSoundEffect)event.getPacket()).getCategory() == SoundCategory.BLOCKS && packet.getSound() == SoundEvents.ENTITY_GENERIC_EXPLODE) {
             try {
                 for (Entity e : Wrapper.getWorld().loadedEntityList) {
                     if (!(e instanceof EntityEnderCrystal) || !(e.getDistance(packet.getX(), packet.getY(), packet.getZ()) <= 6.0)) continue;
@@ -46,7 +46,7 @@ extends Module {
     @Override
     @Subscribe
     public void onUpdate() {
-        if (this.sneakp.getValue().booleanValue()) {
+        if (this.sneakp.getValue(true).booleanValue()) {
             AntiDesync.mc.player.connection.sendPacket((Packet)new CPacketEntityAction((Entity)AntiDesync.mc.player, CPacketEntityAction.Action.START_SNEAKING));
             AntiDesync.mc.player.connection.sendPacket((Packet)new CPacketEntityAction((Entity)AntiDesync.mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
         }

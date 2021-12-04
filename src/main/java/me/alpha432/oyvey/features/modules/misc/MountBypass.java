@@ -27,7 +27,7 @@ extends Module {
 
     @Override
     public void onEnable() {
-        if (this.type.getValue() == Type.New) {
+        if (this.type.getValue(true) == Type.New) {
             if (MountBypass.fullNullCheck()) {
                 return;
             }
@@ -38,11 +38,11 @@ extends Module {
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
         CPacketUseEntity packet;
-        if (this.type.getValue() == Type.Old && event.getPacket() instanceof CPacketUseEntity && (packet = (CPacketUseEntity)event.getPacket()).getEntityFromWorld((World)MountBypass.mc.world) instanceof AbstractChestHorse && packet.getAction() == CPacketUseEntity.Action.INTERACT_AT) {
+        if (this.type.getValue(true) == Type.Old && event.getPacket() instanceof CPacketUseEntity && (packet = (CPacketUseEntity)event.getPacket()).getEntityFromWorld((World)MountBypass.mc.world) instanceof AbstractChestHorse && packet.getAction() == CPacketUseEntity.Action.INTERACT_AT) {
             event.setCanceled(true);
             Command.sendMessage("<" + this.getDisplayName() + "> attempted a mountbypass");
         }
-        if (this.type.getValue() == Type.New && event.getPacket() instanceof CPacketUseEntity) {
+        if (this.type.getValue(true) == Type.New && event.getPacket() instanceof CPacketUseEntity) {
             packet = (CPacketUseEntity)event.getPacket();
             int chestSlot = InventoryUtil.findHotbarBlock(BlockChest.class);
             if (chestSlot == -1) {

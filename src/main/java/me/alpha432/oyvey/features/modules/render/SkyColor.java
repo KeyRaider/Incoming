@@ -34,15 +34,15 @@ public class SkyColor extends Module {
 
     @SubscribeEvent
     public void fogColors(final EntityViewRenderEvent.FogColors event) {
-        event.setRed(red.getValue() / 255f);
-        event.setGreen(green.getValue() / 255f);
-        event.setBlue(blue.getValue() / 255f);
+        event.setRed(red.getValue(true) / 255f);
+        event.setGreen(green.getValue(true) / 255f);
+        event.setBlue(blue.getValue(true) / 255f);
     }
 
     @SubscribeEvent
     public void fog_density(final EntityViewRenderEvent.FogDensity event) {
 
-        if (fog.getValue()) {
+        if (fog.getValue(true)) {
             event.setDensity(0.0f);
             event.setCanceled(true);
         }
@@ -60,7 +60,7 @@ public class SkyColor extends Module {
 
     @Override
     public void onUpdate() {
-        if (rainbow.getValue()) {
+        if (rainbow.getValue(true)) {
             doRainbow();
         }
     }

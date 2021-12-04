@@ -50,10 +50,10 @@ public class Strafe extends Module {
         if (mc.player.isInLava() || mc.player.isInWater() || mc.player.isOnLadder() || mc.player.isInWeb) {
             return;
         }
-        double speedY = jumpHeight.getValue();
+        double speedY = jumpHeight.getValue(true);
 
         if (mc.player.onGround && PlayerUtil.isMoving(mc.player) && timer.passedMs(300)) {
-            setTimer(timerVal.getValue().floatValue());
+            setTimer(timerVal.getValue(true).floatValue());
             if (mc.player.isPotionActive(MobEffects.JUMP_BOOST)) {
                 speedY += (mc.player.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1f;
             }

@@ -102,7 +102,7 @@ public class AutoGG
         this.targetedPlayers.remove(name);
         int u = 0;
         for (int i = 0; i < 10; ++i) {
-            AutoGG.mc.player.connection.sendPacket(new CPacketChatMessage(this.custom.getValue().replaceAll("{name}", name)));
+            AutoGG.mc.player.connection.sendPacket(new CPacketChatMessage(this.custom.getValue(true).replaceAll("{name}", name)));
             ++u;
         }
     }

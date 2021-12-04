@@ -21,7 +21,7 @@ class BoatFly
     public Setting < Double > verticalSpeed = this.register ( new Setting <> ( "VerticalSpeed" , 3.0 , 1.0 , 10.0 ) );
     public Setting < Boolean > noKick = this.register ( new Setting <> ( "No-Kick" , true ) );
     public Setting < Boolean > packet = this.register ( new Setting <> ( "Packet" , true ) );
-    public Setting < Integer > packets = this.register ( new Setting < Object > ( "Packets" , 3 , 1 , 5 , v -> this.packet.getValue ( ) ) );
+    public Setting < Integer > packets = this.register ( new Setting < Object > ( "Packets" , 3 , 1 , 5 , v -> this.packet.getValue (true) ) );
     public Setting < Integer > interact = this.register ( new Setting <> ( "Delay" , 2 , 1 , 20 ) );
     private int teleportID;
 
@@ -45,13 +45,13 @@ class BoatFly
         BoatFly.mc.player.getRidingEntity ( ).motionY = 0.0;
         if ( BoatFly.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
             BoatFly.mc.player.getRidingEntity ( ).onGround = false;
-            BoatFly.mc.player.getRidingEntity ( ).motionY = this.verticalSpeed.getValue ( ) / 10.0;
+            BoatFly.mc.player.getRidingEntity ( ).motionY = this.verticalSpeed.getValue (true) / 10.0;
         }
         if ( BoatFly.mc.gameSettings.keyBindSprint.isKeyDown ( ) ) {
             BoatFly.mc.player.getRidingEntity ( ).onGround = false;
-            BoatFly.mc.player.getRidingEntity ( ).motionY = - ( this.verticalSpeed.getValue ( ) / 10.0 );
+            BoatFly.mc.player.getRidingEntity ( ).motionY = - ( this.verticalSpeed.getValue (true) / 10.0 );
         }
-        double[] normalDir = this.directionSpeed ( this.speed.getValue ( ) / 2.0 );
+        double[] normalDir = this.directionSpeed ( this.speed.getValue (true) / 2.0 );
         if ( BoatFly.mc.player.movementInput.moveStrafe != 0.0f || BoatFly.mc.player.movementInput.moveForward != 0.0f ) {
             BoatFly.mc.player.getRidingEntity ( ).motionX = normalDir[0];
             BoatFly.mc.player.getRidingEntity ( ).motionZ = normalDir[1];
@@ -59,7 +59,7 @@ class BoatFly
             BoatFly.mc.player.getRidingEntity ( ).motionX = 0.0;
             BoatFly.mc.player.getRidingEntity ( ).motionZ = 0.0;
         }
-        if ( this.noKick.getValue ( ) ) {
+        if ( this.noKick.getValue (true) ) {
             if ( BoatFly.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
                 if ( BoatFly.mc.player.ticksExisted % 8 < 2 ) {
                     BoatFly.mc.player.getRidingEntity ( ).motionY = - 0.04f;
@@ -73,7 +73,7 @@ class BoatFly
 
     public
     void handlePackets ( double x , double y , double z ) {
-        if ( this.packet.getValue ( ) ) {
+        if ( this.packet.getValue (true) ) {
             Vec3d vec = new Vec3d ( x , y , z );
             if ( BoatFly.mc.player.getRidingEntity ( ) == null ) {
                 return;
@@ -81,7 +81,7 @@ class BoatFly
             Vec3d position = BoatFly.mc.player.getRidingEntity ( ).getPositionVector ( ).add ( vec );
             BoatFly.mc.player.getRidingEntity ( ).setPosition ( position.x , position.y , position.z );
             BoatFly.mc.player.connection.sendPacket ( new CPacketVehicleMove ( BoatFly.mc.player.getRidingEntity ( ) ) );
-            for (int i = 0; i < this.packets.getValue ( ); ++ i) {
+            for (int i = 0; i < this.packets.getValue (true); ++ i) {
                 BoatFly.mc.player.connection.sendPacket ( new CPacketConfirmTeleport ( this.teleportID++ ) );
             }
         }
@@ -90,7 +90,7 @@ class BoatFly
     @SubscribeEvent
     public
     void onSendPacket ( PacketEvent.Send event ) {
-        if ( event.getPacket ( ) instanceof CPacketVehicleMove && BoatFly.mc.player.isRiding ( ) && BoatFly.mc.player.ticksExisted % this.interact.getValue ( ) == 0 ) {
+        if ( event.getPacket ( ) instanceof CPacketVehicleMove && BoatFly.mc.player.isRiding ( ) && BoatFly.mc.player.ticksExisted % this.interact.getValue (true) == 0 ) {
             BoatFly.mc.playerController.interactWithEntity ( BoatFly.mc.player , BoatFly.mc.player.ridingEntity , EnumHand.OFF_HAND );
         }
         if ( ( event.getPacket ( ) instanceof CPacketPlayer.Rotation || event.getPacket ( ) instanceof CPacketInput ) && BoatFly.mc.player.isRiding ( ) ) {

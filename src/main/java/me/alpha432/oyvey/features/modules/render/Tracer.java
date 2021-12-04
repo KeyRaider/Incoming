@@ -36,7 +36,7 @@ public class Tracer
             return;
         }
         GlStateManager.pushMatrix();
-        Tracer.mc.world.loadedEntityList.stream().filter(EntityUtil::isLiving).filter(entity -> entity instanceof EntityPlayer ? this.players.getValue() && Tracer.mc.player != entity : (EntityUtil.isPassive(entity) ? this.animals.getValue() : this.mobs.getValue())).filter(entity -> Tracer.mc.player.getDistanceSq(entity) < MathUtil.square(this.distance.getValue())).filter(entity -> this.invisibles.getValue() || !entity.isInvisible()).forEach(entity -> {
+        Tracer.mc.world.loadedEntityList.stream().filter(EntityUtil::isLiving).filter(entity -> entity instanceof EntityPlayer ? this.players.getValue(true) && Tracer.mc.player != entity : (EntityUtil.isPassive(entity) ? this.animals.getValue(true) : this.mobs.getValue(true))).filter(entity -> Tracer.mc.player.getDistanceSq(entity) < MathUtil.square(this.distance.getValue(true))).filter(entity -> this.invisibles.getValue(true) || !entity.isInvisible()).forEach(entity -> {
             float[] colour = this.getColorByDistance(entity);
             this.drawLineToEntity(entity, colour[0], colour[1], colour[2], colour[3]);
         });
@@ -61,7 +61,7 @@ public class Tracer
 
     public void drawLine(double posx, double posy, double posz, double up, float red, float green, float blue, float opacity) {
         Vec3d eyes = new Vec3d(0.0, 0.0, 1.0).rotatePitch(-((float) Math.toRadians(Tracer.mc.player.rotationPitch))).rotateYaw(-((float) Math.toRadians(Tracer.mc.player.rotationYaw)));
-        if (!this.drawFromSky.getValue()) {
+        if (!this.drawFromSky.getValue(true)) {
             this.drawLineFromPosToPos(eyes.x, eyes.y + (double) Tracer.mc.player.getEyeHeight(), eyes.z, posx, posy, posz, up, red, green, blue, opacity);
         } else {
             this.drawLineFromPosToPos(posx, 256.0, posz, posx, posy, posz, up, red, green, blue, opacity);
@@ -71,7 +71,7 @@ public class Tracer
     public void drawLineFromPosToPos(double posx, double posy, double posz, double posx2, double posy2, double posz2, double up, float red, float green, float blue, float opacity) {
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(3042);
-        GL11.glLineWidth(this.width.getValue());
+        GL11.glLineWidth(this.width.getValue(true));
         GL11.glDisable(3553);
         GL11.glDisable(2929);
         GL11.glDepthMask(false);
@@ -97,7 +97,7 @@ public class Tracer
             return new float[]{0.0f, 0.5f, 1.0f, 1.0f};
         }
         AutoCrystal autoCrystal = OyVey.moduleManager.getModuleByClass(AutoCrystal.class);
-        Color col = new Color(Color.HSBtoRGB((float) (Math.max(0.0, Math.min(Tracer.mc.player.getDistanceSq(entity), this.crystalCheck.getValue() ? (double) (autoCrystal.placeRange.getValue() * autoCrystal.placeRange.getValue()) : 2500.0) / (double) (this.crystalCheck.getValue() ? autoCrystal.placeRange.getValue() * autoCrystal.placeRange.getValue() : 2500.0f)) / 3.0), 1.0f, 0.8f) | 0xFF000000);
+        Color col = new Color(Color.HSBtoRGB((float) (Math.max(0.0, Math.min(Tracer.mc.player.getDistanceSq(entity), this.crystalCheck.getValue(true) ? (double) (autoCrystal.placeRange.getValue(true) * autoCrystal.placeRange.getValue(true)) : 2500.0) / (double) (this.crystalCheck.getValue(true) ? autoCrystal.placeRange.getValue(true) * autoCrystal.placeRange.getValue(true) : 2500.0f)) / 3.0), 1.0f, 0.8f) | 0xFF000000);
         return new float[]{(float) col.getRed() / 255.0f, (float) col.getGreen() / 255.0f, (float) col.getBlue() / 255.0f, 1.0f};
     }
 }

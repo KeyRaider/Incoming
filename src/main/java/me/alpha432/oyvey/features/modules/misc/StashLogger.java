@@ -50,14 +50,14 @@ extends Module {
             int shulkers = 0;
             for (NBTTagCompound l_Tag : l_Packet.getTileEntityTags()) {
                 String l_Id = l_Tag.getString("id");
-                if (l_Id.equals("minecraft:chest") && this.chests.getValue().booleanValue()) {
+                if (l_Id.equals("minecraft:chest") && this.chests.getValue(true).booleanValue()) {
                     ++l_ChestsCount;
                     continue;
                 }
-                if (!l_Id.equals("minecraft:shulker_box") || !this.Shulkers.getValue().booleanValue()) continue;
+                if (!l_Id.equals("minecraft:shulker_box") || !this.Shulkers.getValue(true).booleanValue()) continue;
                 ++shulkers;
             }
-            if (l_ChestsCount >= this.chestsToImportantNotify.getValue()) {
+            if (l_ChestsCount >= this.chestsToImportantNotify.getValue(true)) {
                 this.SendMessage(String.format("%s chests located at X: %s, Z: %s", l_ChestsCount, l_Packet.getChunkX() * 16, l_Packet.getChunkZ() * 16), true);
             }
             if (shulkers > 0) {
@@ -69,7 +69,7 @@ extends Module {
     private void SendMessage(String message, boolean save) {
         String server;
         String string = server = Minecraft.getMinecraft().isSingleplayer() ? "singleplayer".toUpperCase() : StashLogger.mc.getCurrentServerData().serverIP;
-        if (this.writeToFile.getValue().booleanValue() && save) {
+        if (this.writeToFile.getValue(true).booleanValue() && save) {
             try {
                 FileWriter writer = new FileWriter(this.mainFolder + "/stashes.txt", true);
                 writer.write("[" + server + "]: " + message + "\n");

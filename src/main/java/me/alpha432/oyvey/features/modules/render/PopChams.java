@@ -42,7 +42,7 @@ public class PopChams
 
     @SubscribeEvent
     public void onPopLol(TotemPopEvent event) {
-        Color color = EntityUtil.getColor(event.getEntity(), this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue(), false);
+        Color color = EntityUtil.getColor(event.getEntity(), this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true), false);
         if (event.getEntity() != mc.player) {
             Entity ee = event.getEntity();
             Command.sendMessage("PopEventLol"); // this looks like wurst+ 3

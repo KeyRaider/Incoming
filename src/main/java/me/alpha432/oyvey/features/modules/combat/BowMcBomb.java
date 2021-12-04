@@ -1,6 +1,5 @@
 package me.alpha432.oyvey.features.modules.combat;
 
-import me.alpha432.oyvey.OyVey;
 import me.alpha432.oyvey.event.events.PacketEvent;
 import me.alpha432.oyvey.features.modules.Module;
 import me.alpha432.oyvey.features.setting.Setting;
@@ -48,9 +47,9 @@ public class BowMcBomb extends Module {
             if (packet.getAction() == CPacketPlayerDigging.Action.RELEASE_USE_ITEM) {
                 ItemStack handStack = mc.player.getHeldItem(EnumHand.MAIN_HAND);
 
-                if (!handStack.isEmpty() && handStack.getItem() != null && handStack.getItem() instanceof ItemBow && Bows.getValue()) {
+                if (!handStack.isEmpty() && handStack.getItem() != null && handStack.getItem() instanceof ItemBow && Bows.getValue(true)) {
                     doSpoofs();
-                    if (debug.getValue()) Command.sendMessage("trying to spoof");
+                    if (debug.getValue(true)) Command.sendMessage("trying to spoof");
                 }
             }
 
@@ -61,11 +60,11 @@ public class BowMcBomb extends Module {
                 ItemStack handStack = mc.player.getHeldItem(EnumHand.MAIN_HAND);
 
                 if (!handStack.isEmpty() && handStack.getItem() != null) {
-                    if (handStack.getItem() instanceof ItemEgg && eggs.getValue()) {
+                    if (handStack.getItem() instanceof ItemEgg && eggs.getValue(true)) {
                         doSpoofs();
-                    } else if (handStack.getItem() instanceof ItemEnderPearl && pearls.getValue()) {
+                    } else if (handStack.getItem() instanceof ItemEnderPearl && pearls.getValue(true)) {
                         doSpoofs();
-                    } else if (handStack.getItem() instanceof ItemSnowball && snowballs.getValue()) {
+                    } else if (handStack.getItem() instanceof ItemSnowball && snowballs.getValue(true)) {
                         doSpoofs();
                     }
                 }
@@ -74,14 +73,14 @@ public class BowMcBomb extends Module {
     }
 
     private void doSpoofs() {
-        if (System.currentTimeMillis() - lastShootTime >= Timeout.getValue()) {
+        if (System.currentTimeMillis() - lastShootTime >= Timeout.getValue(true)) {
             shooting = true;
             lastShootTime = System.currentTimeMillis();
 
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SPRINTING));
 
-            for (int index = 0; index < spoofs.getValue(); ++index) {
-                if (bypass.getValue()) {
+            for (int index = 0; index < spoofs.getValue(true); ++index) {
+                if (bypass.getValue(true)) {
                     mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1e-10, mc.player.posZ, false));
                     mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY - 1e-10, mc.player.posZ, true));
                 } else {
@@ -91,7 +90,7 @@ public class BowMcBomb extends Module {
 
             }
 
-            if (debug.getValue()) Command.sendMessage("Spoofed");
+            if (debug.getValue(true)) Command.sendMessage("Spoofed");
 
             shooting = false;
         }

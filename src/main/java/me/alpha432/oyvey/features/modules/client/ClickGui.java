@@ -32,11 +32,11 @@ public class ClickGui
     public Setting<Integer> alpha = this.register(new Setting<>("HoverAlpha", 240, 0, 255));
 
     public Setting<Boolean> rainbow = this.register(new Setting<>("Rainbow", false));
-    public Setting<rainbowMode> rainbowModeHud = this.register(new Setting<Object>("HRainbowMode", rainbowMode.Static, v -> this.rainbow.getValue()));
-    public Setting<rainbowModeArray> rainbowModeA = this.register(new Setting<Object>("ARainbowMode", rainbowModeArray.Static, v -> this.rainbow.getValue()));
-    public Setting<Integer> rainbowHue = this.register(new Setting<Object>("Delay", 7, 0, 600, v -> this.rainbow.getValue()));
-    public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 59.5f, 1.0f, 255.0f, v -> this.rainbow.getValue()));
-    public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 176.7f, 1.0f, 255.0f, v -> this.rainbow.getValue()));
+    public Setting<rainbowMode> rainbowModeHud = this.register(new Setting<Object>("HRainbowMode", rainbowMode.Static, v -> this.rainbow.getValue(true)));
+    public Setting<rainbowModeArray> rainbowModeA = this.register(new Setting<Object>("ARainbowMode", rainbowModeArray.Static, v -> this.rainbow.getValue(true)));
+    public Setting<Integer> rainbowHue = this.register(new Setting<Object>("Delay", 7, 0, 600, v -> this.rainbow.getValue(true)));
+    public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 59.5f, 1.0f, 255.0f, v -> this.rainbow.getValue(true)));
+    public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 176.7f, 1.0f, 255.0f, v -> this.rainbow.getValue(true)));
 
     public float hue;
 
@@ -62,23 +62,23 @@ public class ClickGui
 
     @Override
     public void onUpdate() {
-        if (this.customFov.getValue()) {
-            ClickGui.mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getValue());
+        if (this.customFov.getValue(true)) {
+            ClickGui.mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getValue(true));
         }
     }
 
     public int getCurrentColorHex() {
-        if (this.rainbow.getValue()) {
-            return Color.HSBtoRGB(this.hue, (float) this.rainbowSaturation.getValue().intValue() / 255.0f, (float) this.rainbowBrightness.getValue().intValue() / 255.0f);
+        if (this.rainbow.getValue(true)) {
+            return Color.HSBtoRGB(this.hue, (float) this.rainbowSaturation.getValue(true).intValue() / 255.0f, (float) this.rainbowBrightness.getValue(true).intValue() / 255.0f);
         }
-        return ColorUtil.toARGB(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue());
+        return ColorUtil.toARGB(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true));
     }
 
     public Color getCurrentColor() {
-        if (this.rainbow.getValue()) {
-            return Color.getHSBColor(this.hue, (float) this.rainbowSaturation.getValue().intValue() / 255.0f, (float) this.rainbowBrightness.getValue().intValue() / 255.0f);
+        if (this.rainbow.getValue(true)) {
+            return Color.getHSBColor(this.hue, (float) this.rainbowSaturation.getValue(true).intValue() / 255.0f, (float) this.rainbowBrightness.getValue(true).intValue() / 255.0f);
         }
-        return new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue());
+        return new Color(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true));
     }
 
 
@@ -100,8 +100,8 @@ public class ClickGui
 
     @Override
     public void onLoad() {
-        OyVey.colorManager.setColor(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.hoverAlpha.getValue());
-        OyVey.commandManager.setPrefix(this.prefix.getValue());
+        OyVey.colorManager.setColor(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.hoverAlpha.getValue(true));
+        OyVey.commandManager.setPrefix(this.prefix.getValue(true));
     }
 
     @Override

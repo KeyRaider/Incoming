@@ -15,7 +15,7 @@ public class FakeKick
     }
 
     public void onEnable(){
-            if (healthDisplay.getValue()){
+            if (healthDisplay.getValue(true)){
             float health = (mc.player.getAbsorptionAmount()+mc.player.getHealth());
                 Minecraft.getMinecraft().getConnection().handleDisconnect(new SPacketDisconnect(new TextComponentString("Logged out with " + health + " health remaining." )));
             this.disable();

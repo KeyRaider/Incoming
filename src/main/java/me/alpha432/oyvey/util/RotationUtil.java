@@ -47,7 +47,7 @@ public class RotationUtil
     }
 
     public static float getFov() {
-        return ClickGui.getInstance().customFov.getValue() ? ClickGui.getInstance().fov.getValue() : RotationUtil.mc.gameSettings.fovSetting;
+        return ClickGui.getInstance().customFov.getValue(true) ? ClickGui.getInstance().fov.getValue(true) : RotationUtil.mc.gameSettings.fovSetting;
     }
 
     public static float getHalvedfov() {
@@ -95,7 +95,7 @@ public class RotationUtil
         if (angle < -270.0f) {
             return true;
         }
-        float fov = (ClickGui.getInstance().customFov.getValue() ? ClickGui.getInstance().fov.getValue() : RotationUtil.mc.gameSettings.fovSetting) / 2.0f;
+        float fov = (ClickGui.getInstance().customFov.getValue(true) ? ClickGui.getInstance().fov.getValue(true) : RotationUtil.mc.gameSettings.fovSetting) / 2.0f;
         return angle < fov + 10.0f && angle > -fov - 10.0f;
     }
 
@@ -124,27 +124,27 @@ public class RotationUtil
     public static String getDirection4D(boolean northRed) {
         int dirnumber = RotationUtil.getDirection4D();
         if (dirnumber == 0) {
-            if (!ClickGui.getInstance().rainbow.getValue()) {
+            if (!ClickGui.getInstance().rainbow.getValue(true)) {
                 return "South " + ChatFormatting.GRAY + "[" + ChatFormatting.WHITE + "+Z" + ChatFormatting.GRAY + "]";
             }
             return "South [+Z]";
 
         }
         if (dirnumber == 1) {
-            if (!ClickGui.getInstance().rainbow.getValue()) {
+            if (!ClickGui.getInstance().rainbow.getValue(true)) {
                 return "West " + ChatFormatting.GRAY + "[" + ChatFormatting.WHITE + "-X" + ChatFormatting.GRAY + "]";
             }
             return "West [-X]";
         }
         if (dirnumber == 2) {
-            if (!ClickGui.getInstance().rainbow.getValue()) {
+            if (!ClickGui.getInstance().rainbow.getValue(true)) {
                 return (northRed ? "\u00c2\u00a7c" : "") + "North " + ChatFormatting.GRAY + "[" + ChatFormatting.WHITE + "-Z" + ChatFormatting.GRAY + "]";
             }
             return "North [-Z]";
 
         }
         if (dirnumber == 3) {
-            if (!ClickGui.getInstance().rainbow.getValue()) {
+            if (!ClickGui.getInstance().rainbow.getValue(true)) {
                 return "East " + ChatFormatting.GRAY + "[" + ChatFormatting.WHITE + "+X" + ChatFormatting.GRAY + "]";
             }
             return "East [+X]";

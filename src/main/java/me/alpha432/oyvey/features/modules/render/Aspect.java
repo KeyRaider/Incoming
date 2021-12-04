@@ -16,6 +16,6 @@ public class Aspect extends Module {
 
     @SubscribeEvent
     public void onPerspectiveEvent(PerspectiveEvent event) {
-        event.setAspect(aspect.getValue().floatValue());
+        event.setAspect(aspect.getValue(true).floatValue());
     }
 }

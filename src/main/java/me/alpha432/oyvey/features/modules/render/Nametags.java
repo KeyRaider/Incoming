@@ -41,8 +41,8 @@ public class Nametags
     private final Setting<Boolean> whiter = this.register(new Setting<Boolean>("White", false));
     private final Setting<Boolean> onlyFov = this.register(new Setting<Boolean>("OnlyFov", false));
     private final Setting<Boolean> scaleing = this.register(new Setting<Boolean>("Scale", false));
-    private final Setting<Float> factor = this.register(new Setting<Object>("Factor", Float.valueOf(0.3f), Float.valueOf(0.1f), Float.valueOf(1.0f), v -> this.scaleing.getValue()));
-    private final Setting<Boolean> smartScale = this.register(new Setting<Object>("SmartScale", Boolean.valueOf(false), v -> this.scaleing.getValue()));
+    private final Setting<Float> factor = this.register(new Setting<Object>("Factor", Float.valueOf(0.3f), Float.valueOf(0.1f), Float.valueOf(1.0f), v -> this.scaleing.getValue(true)));
+    private final Setting<Boolean> smartScale = this.register(new Setting<Object>("SmartScale", Boolean.valueOf(false), v -> this.scaleing.getValue(true)));
 
     public Nametags() {
         super("Nametags", "Better Nametags", Module.Category.RENDER, false, false, false);
@@ -64,7 +64,7 @@ public class Nametags
     public void onRender3D(Render3DEvent event) {
         if (!Nametags.fullNullCheck()) {
             for (EntityPlayer player : Nametags.mc.world.playerEntities) {
-                if (player == null || player.equals(Nametags.mc.player) || !player.isEntityAlive() || player.isInvisible() && !this.invisibles.getValue().booleanValue() || this.onlyFov.getValue().booleanValue() && !RotationUtil.isInFov(player))
+                if (player == null || player.equals(Nametags.mc.player) || !player.isEntityAlive() || player.isInvisible() && !this.invisibles.getValue(true).booleanValue() || this.onlyFov.getValue(true).booleanValue() && !RotationUtil.isInFov(player))
                     continue;
                 double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - Nametags.mc.getRenderManager().renderPosX;
                 double y = this.interpolate(player.lastTickPosY, player.posY, event.getPartialTicks()) - Nametags.mc.getRenderManager().renderPosY;
@@ -88,12 +88,12 @@ public class Nametags
         String displayTag = this.getDisplayTag(player);
         double distance = camera.getDistance(x + Nametags.mc.getRenderManager().viewerPosX, y + Nametags.mc.getRenderManager().viewerPosY, z + Nametags.mc.getRenderManager().viewerPosZ);
         int width = this.renderer.getStringWidth(displayTag) / 2;
-        double scale = (0.0018 + (double) this.scaling.getValue().floatValue() * (distance * (double) this.factor.getValue().floatValue())) / 1000.0;
-        if (distance <= 8.0 && this.smartScale.getValue().booleanValue()) {
+        double scale = (0.0018 + (double) this.scaling.getValue(true).floatValue() * (distance * (double) this.factor.getValue(true).floatValue())) / 1000.0;
+        if (distance <= 8.0 && this.smartScale.getValue(true).booleanValue()) {
             scale = 0.0245;
         }
-        if (!this.scaleing.getValue().booleanValue()) {
-            scale = (double) this.scaling.getValue().floatValue() / 100.0;
+        if (!this.scaleing.getValue(true).booleanValue()) {
+            scale = (double) this.scaling.getValue(true).floatValue() / 100.0;
         }
         GlStateManager.pushMatrix();
         RenderHelper.enableStandardItemLighting();
@@ -107,7 +107,7 @@ public class Nametags
         GlStateManager.disableDepth();
         GlStateManager.enableBlend();
         GlStateManager.enableBlend();
-        if (this.rect.getValue().booleanValue()) {
+        if (this.rect.getValue(true).booleanValue()) {
             RenderUtil.drawRect(-width - 2, -(this.renderer.getFontHeight() + 1), (float) width + 2.0f, 1.5f, 0x55000000);
         }
         GlStateManager.disableBlend();
@@ -115,7 +115,7 @@ public class Nametags
         if (renderMainHand.hasEffect() && (renderMainHand.getItem() instanceof ItemTool || renderMainHand.getItem() instanceof ItemArmor)) {
             renderMainHand.stackSize = 1;
         }
-        if (this.heldStackName.getValue().booleanValue() && !renderMainHand.isEmpty && renderMainHand.getItem() != Items.AIR) {
+        if (this.heldStackName.getValue(true).booleanValue() && !renderMainHand.isEmpty && renderMainHand.getItem() != Items.AIR) {
             String stackName = renderMainHand.getDisplayName();
             int stackNameWidth = this.renderer.getStringWidth(stackName) / 2;
             GL11.glPushMatrix();
@@ -124,7 +124,7 @@ public class Nametags
             GL11.glScalef(1.5f, 1.5f, 1.0f);
             GL11.glPopMatrix();
         }
-        if (this.armor.getValue().booleanValue()) {
+        if (this.armor.getValue(true).booleanValue()) {
             GlStateManager.pushMatrix();
             int xOffset = -8;
             for (ItemStack stack : player.inventory.armorInventory) {
@@ -265,13 +265,13 @@ public class Nametags
         if (name.contains(mc.getSession().getUsername())) {
             name = "You";
         }
-        if (!this.health.getValue().booleanValue()) {
+        if (!this.health.getValue(true).booleanValue()) {
             return name;
         }
         float health = EntityUtil.getHealth(player);
         String color = health > 18.0f ? "\u00a7a" : (health > 16.0f ? "\u00a72" : (health > 12.0f ? "\u00a7e" : (health > 8.0f ? "\u00a76" : (health > 5.0f ? "\u00a7c" : "\u00a74"))));
         String pingStr = "";
-        if (this.ping.getValue().booleanValue()) {
+        if (this.ping.getValue(true).booleanValue()) {
             try {
                 int responseTime = Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime();
                 pingStr = pingStr + responseTime + "ms ";
@@ -280,15 +280,15 @@ public class Nametags
             }
         }
         String popStr = " ";
-        if (this.totemPops.getValue().booleanValue()) {
+        if (this.totemPops.getValue(true).booleanValue()) {
             popStr = popStr + OyVey.totemPopManager.getTotemPopString(player);
         }
         String idString = "";
-        if (this.entityID.getValue().booleanValue()) {
+        if (this.entityID.getValue(true).booleanValue()) {
             idString = idString + "ID: " + player.getEntityId() + " ";
         }
         String gameModeStr = "";
-        if (this.gamemode.getValue().booleanValue()) {
+        if (this.gamemode.getValue(true).booleanValue()) {
             gameModeStr = player.isCreative() ? gameModeStr + "[C] " : (player.isSpectator() || player.isInvisible() ? gameModeStr + "[I] " : gameModeStr + "[S] ");
         }
         name = Math.floor(health) == (double) health ? name + color + " " + (health > 0.0f ? Integer.valueOf((int) Math.floor(health)) : "dead") : name + color + " " + (health > 0.0f ? Integer.valueOf((int) health) : "dead");
@@ -297,7 +297,7 @@ public class Nametags
 
     private int getDisplayColour(EntityPlayer player) {
         int colour = -5592406;
-        if (this.whiter.getValue().booleanValue()) {
+        if (this.whiter.getValue(true).booleanValue()) {
             colour = -1;
         }
         if (OyVey.friendManager.isFriend(player)) {
@@ -305,7 +305,7 @@ public class Nametags
         }
         if (player.isInvisible()) {
             colour = -1113785;
-        } else if (player.isSneaking() && this.sneak.getValue().booleanValue()) {
+        } else if (player.isSneaking() && this.sneak.getValue(true).booleanValue()) {
             colour = -6481515;
         }
         return colour;

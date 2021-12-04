@@ -67,10 +67,10 @@ class Anchor
         if ( this.mc.world == null ) {
             return;
         }
-        if ( this.mc.player.rotationPitch >= (float) this.pitch.getValue ( ) ) {
+        if ( this.mc.player.rotationPitch >= (float) this.pitch.getValue (true) ) {
             if ( this.isBlockHole ( this.getPlayerPos ( ).down ( 1 ) ) || this.isBlockHole ( this.getPlayerPos ( ).down ( 2 ) ) || this.isBlockHole ( this.getPlayerPos ( ).down ( 3 ) ) || this.isBlockHole ( this.getPlayerPos ( ).down ( 4 ) ) ) {
                 Anchoring = true;
-                if ( ! this.pull.getValue ( ) ) {
+                if ( ! this.pull.getValue (true) ) {
                     this.mc.player.motionX = 0.0;
                     this.mc.player.motionZ = 0.0;
                 } else {

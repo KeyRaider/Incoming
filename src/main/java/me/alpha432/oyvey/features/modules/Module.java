@@ -85,11 +85,11 @@ public class Module
     }
 
     public boolean isOn() {
-        return this.enabled.getValue();
+        return this.enabled.getValue(true);
     }
 
     public boolean isOff() {
-        return !this.enabled.getValue();
+        return !this.enabled.getValue(true);
     }
 
     public void setEnabled(boolean enabled) {
@@ -103,7 +103,7 @@ public class Module
 
     public TextComponentString getNotifierOn() {
         if (ModuleTools.getInstance().isEnabled()) {
-            switch (ModuleTools.getInstance().notifier.getValue()) {
+            switch (ModuleTools.getInstance().notifier.getValue(true)) {
                 case FUTURE: {
                     TextComponentString text = new TextComponentString(ChatFormatting.RED + "[Future] " + ChatFormatting.GRAY + this.getDisplayName() + " toggled " + ChatFormatting.GREEN + "on" + ChatFormatting.GRAY + ".");
                     return text;
@@ -130,7 +130,7 @@ public class Module
 
     public TextComponentString getNotifierOff() {
         if (ModuleTools.getInstance().isEnabled()) {
-            switch (ModuleTools.getInstance().notifier.getValue()) {
+            switch (ModuleTools.getInstance().notifier.getValue(true)) {
                 case FUTURE: {
                     TextComponentString text = new TextComponentString(ChatFormatting.RED + "[Future] " + ChatFormatting.GRAY + this.getDisplayName() + " toggled " + ChatFormatting.RED + "off" + ChatFormatting.GRAY + ".");
                     return text;
@@ -160,7 +160,7 @@ public class Module
         this.enabled.setValue(Boolean.TRUE);
         this.onToggle();
         this.onEnable();
-        if (HUD.getInstance().notifyToggles.getValue()) {
+        if (HUD.getInstance().notifyToggles.getValue(true)) {
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(getNotifierOn(), 1);
             if (this.isOn() && this.hasListener && !this.alwaysListening) {
                 MinecraftForge.EVENT_BUS.register(this);
@@ -174,7 +174,7 @@ public class Module
             MinecraftForge.EVENT_BUS.unregister(this);
         }
         this.enabled.setValue(false);
-        if (HUD.getInstance().notifyToggles.getValue()) {
+        if (HUD.getInstance().notifyToggles.getValue(true)) {
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(getNotifierOff(), 1);
         }
 
@@ -191,7 +191,7 @@ public class Module
     }
 
     public String getDisplayName() {
-        return this.displayName.getValue();
+        return this.displayName.getValue(true);
     }
 
     public void setDisplayName(String name) {
@@ -210,7 +210,7 @@ public class Module
     }
 
     public boolean isDrawn() {
-        return this.drawn.getValue();
+        return this.drawn.getValue(true);
     }
 
     public void setDrawn(boolean drawn) {
@@ -226,7 +226,7 @@ public class Module
     }
 
     public Bind getBind() {
-        return this.bind.getValue();
+        return this.bind.getValue(true);
     }
 
     public void setBind(int key) {

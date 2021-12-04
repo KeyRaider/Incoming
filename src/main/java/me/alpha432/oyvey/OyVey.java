@@ -130,7 +130,7 @@ public class OyVey {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        Display.setTitle("Incoming - v" + MODVER);
+        Display.setTitle("Incoming - v1.2.6");
 
         OyVey.load();
     }

@@ -38,7 +38,7 @@ public class Burrow extends Module {
     public void onEnable() {
         super.onEnable();
         this.originalPos = new BlockPos(Burrow.mc.player.posX, Burrow.mc.player.posY, Burrow.mc.player.posZ);
-        switch (this.mode.getValue()) {
+        switch (this.mode.getValue(true)) {
             case OBBY: {
                 this.returnBlock = Blocks.OBSIDIAN;
                 break;
@@ -61,7 +61,7 @@ public class Burrow extends Module {
 
     @Override
     public void onUpdate() {
-        switch (this.mode.getValue()) {
+        switch (this.mode.getValue(true)) {
             case OBBY: {
                 if (BurrowUtil.findHotbarBlock(BlockObsidian.class) == -1) {
                     Command.sendMessage("Can't find obby in hotbar!");
@@ -87,13 +87,13 @@ public class Burrow extends Module {
                 break;
             }
         }
-        BurrowUtil.switchToSlot((this.mode.getValue() == Mode.OBBY) ? BurrowUtil.findHotbarBlock(BlockObsidian.class) : ((this.mode.getValue() == Mode.ECHEST) ? BurrowUtil.findHotbarBlock(BlockEnderChest.class) : BurrowUtil.findHotbarBlock(BlockChest.class)));
+        BurrowUtil.switchToSlot((this.mode.getValue(true) == Mode.OBBY) ? BurrowUtil.findHotbarBlock(BlockObsidian.class) : ((this.mode.getValue(true) == Mode.ECHEST) ? BurrowUtil.findHotbarBlock(BlockEnderChest.class) : BurrowUtil.findHotbarBlock(BlockChest.class)));
         Burrow.mc.player.connection.sendPacket(new CPacketPlayer.Position(Burrow.mc.player.posX, Burrow.mc.player.posY + 0.41999998688698, Burrow.mc.player.posZ, true));
         Burrow.mc.player.connection.sendPacket(new CPacketPlayer.Position(Burrow.mc.player.posX, Burrow.mc.player.posY + 0.7531999805211997, Burrow.mc.player.posZ, true));
         Burrow.mc.player.connection.sendPacket(new CPacketPlayer.Position(Burrow.mc.player.posX, Burrow.mc.player.posY + 1.00133597911214, Burrow.mc.player.posZ, true));
         Burrow.mc.player.connection.sendPacket(new CPacketPlayer.Position(Burrow.mc.player.posX, Burrow.mc.player.posY + 1.16610926093821, Burrow.mc.player.posZ, true));
-        BurrowUtil.placeBlock(this.originalPos, EnumHand.MAIN_HAND, this.rotate.getValue(), true, false);
-        Burrow.mc.player.connection.sendPacket(new CPacketPlayer.Position(Burrow.mc.player.posX, Burrow.mc.player.posY + this.offset.getValue(), Burrow.mc.player.posZ, false));
+        BurrowUtil.placeBlock(this.originalPos, EnumHand.MAIN_HAND, this.rotate.getValue(true), true, false);
+        Burrow.mc.player.connection.sendPacket(new CPacketPlayer.Position(Burrow.mc.player.posX, Burrow.mc.player.posY + this.offset.getValue(true), Burrow.mc.player.posZ, false));
         Burrow.mc.player.connection.sendPacket(new CPacketEntityAction(Burrow.mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
         Burrow.mc.player.setSneaking(false);
         BurrowUtil.switchToSlot(this.oldSlot);

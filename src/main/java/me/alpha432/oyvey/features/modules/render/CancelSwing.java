@@ -22,14 +22,14 @@ public class CancelSwing extends Module {
     }
 
     public void onPacketSend(PacketEvent.Send event) {
-        if (event.getPacket() instanceof CPacketAnimation && swingmode.getValue() == mode.CancelAnimation) {
+        if (event.getPacket() instanceof CPacketAnimation && swingmode.getValue(true) == mode.CancelAnimation) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public void onUpdate() {
-        if (cancelmotion.getValue()) {
+        if (cancelmotion.getValue(true)) {
             if (mc.entityRenderer.itemRenderer.prevEquippedProgressOffHand >= 0.9) {
                 mc.entityRenderer.itemRenderer.equippedProgressOffHand = 1.0f;
             }
@@ -37,7 +37,7 @@ public class CancelSwing extends Module {
                 mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
             }
         }
-        switch (swingmode.getValue()) {
+        switch (swingmode.getValue(true)) {
             case Mainhand: {
                 setSwingingHand(EnumHand.MAIN_HAND);
             }

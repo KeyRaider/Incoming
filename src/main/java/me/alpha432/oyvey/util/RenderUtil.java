@@ -131,7 +131,7 @@ public class RenderUtil
                 drawFilledBox(a, new Color(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, boxAlpha / 255.0f).getRGB());
             }
             if (outline) {
-                drawBlockOutline(a, new Color(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, 1.0f), PacketMine.getInstance().lineWidth.getValue());
+                drawBlockOutline(a, new Color(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, 1.0f), PacketMine.getInstance().lineWidth.getValue(true));
             }
             GL11.glDisable(2848);
             GlStateManager.depthMask(true);

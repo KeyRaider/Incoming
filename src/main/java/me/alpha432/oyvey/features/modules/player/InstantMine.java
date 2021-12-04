@@ -18,7 +18,6 @@ import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
@@ -62,8 +61,8 @@ public class InstantMine extends Module {
     @Override
     public void onUpdate() {
         if (renderBlock != null) {
-            if (autoBreak.getValue() && breaktimer.passed(delay.getValue())) {
-                if (picOnly.getValue() && !(mc.player.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.DIAMOND_PICKAXE))
+            if (autoBreak.getValue(true) && breaktimer.passed(delay.getValue(true))) {
+                if (picOnly.getValue(true) && !(mc.player.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.DIAMOND_PICKAXE))
                     return;
                 mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
                         renderBlock, direction));

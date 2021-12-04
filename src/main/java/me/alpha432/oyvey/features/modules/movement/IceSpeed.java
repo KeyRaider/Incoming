@@ -23,9 +23,9 @@ extends Module {
 
     @Override
     public void onUpdate() {
-        Blocks.ICE.slipperiness = this.speed.getValue().floatValue();
-        Blocks.PACKED_ICE.slipperiness = this.speed.getValue().floatValue();
-        Blocks.FROSTED_ICE.slipperiness = this.speed.getValue().floatValue();
+        Blocks.ICE.slipperiness = this.speed.getValue(true).floatValue();
+        Blocks.PACKED_ICE.slipperiness = this.speed.getValue(true).floatValue();
+        Blocks.FROSTED_ICE.slipperiness = this.speed.getValue(true).floatValue();
     }
 
     @Override

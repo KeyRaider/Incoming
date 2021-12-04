@@ -74,14 +74,14 @@ public class AutoReconnect
         }
 
         public void updateScreen() {
-            if (this.timer.passedS(AutoReconnect.this.delay.getValue())) {
+            if (this.timer.passedS(AutoReconnect.this.delay.getValue(true))) {
                 this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, this.mc, serverData == null ? this.mc.currentServerData : serverData));
             }
         }
 
         public void drawScreen(int mouseX, int mouseY, float partialTicks) {
             super.drawScreen(mouseX, mouseY, partialTicks);
-            String s = "Reconnecting in " + MathUtil.round((double) ((long) (AutoReconnect.this.delay.getValue() * 1000) - this.timer.getPassedTimeMs()) / 1000.0, 1);
+            String s = "Reconnecting in " + MathUtil.round((double) ((long) (AutoReconnect.this.delay.getValue(true) * 1000) - this.timer.getPassedTimeMs()) / 1000.0, 1);
             AutoReconnect.this.renderer.drawString(s, this.width / 2 - AutoReconnect.this.renderer.getStringWidth(s) / 2, this.height - 16, 0xFFFFFF, true);
         }
     }

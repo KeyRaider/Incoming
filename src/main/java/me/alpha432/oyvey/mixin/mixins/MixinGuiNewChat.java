@@ -27,14 +27,14 @@ public class MixinGuiNewChat
 
     @Redirect(method = {"drawChat"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;drawRect(IIIII)V"))
     private void drawRectHook(int left, int top, int right, int bottom, int color) {
-        Gui.drawRect(left, top, right, bottom, ChatModifier.getInstance().isOn() && ChatModifier.getInstance().clean.getValue() ? 0 : color);
+        Gui.drawRect(left, top, right, bottom, ChatModifier.getInstance().isOn() && ChatModifier.getInstance().clean.getValue(true) ? 0 : color);
     }
 
 
     @Redirect(method = {"drawChat"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"))
     private int drawStringWithShadow(FontRenderer fontRenderer, String text, float x, float y, int color) {
         if (text.contains("\u00a7+")) {
-            float colorSpeed = 101 - HUD.getInstance().rainbowSpeed.getValue();
+            float colorSpeed = 101 - HUD.getInstance().rainbowSpeed.getValue(true);
             OyVey.textManager.drawRainbowString(text, x, y, Color.HSBtoRGB(HUD.getInstance().hue, 1.0f, 1.0f), 100.0f, true);
         } else {
             Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(text, x, y, color);
@@ -44,11 +44,11 @@ public class MixinGuiNewChat
 
     @Redirect(method = {"setChatLine"}, at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false))
     public int drawnChatLinesSize(List<ChatLine> list) {
-        return ChatModifier.getInstance().isOn() && ChatModifier.getInstance().infinite.getValue() ? -2147483647 : list.size();
+        return ChatModifier.getInstance().isOn() && ChatModifier.getInstance().infinite.getValue(true) ? -2147483647 : list.size();
     }
 
     @Redirect(method = {"setChatLine"}, at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 2, remap = false))
     public int chatLinesSize(List<ChatLine> list) {
-        return ChatModifier.getInstance().isOn() && ChatModifier.getInstance().infinite.getValue() ? -2147483647 : list.size();
+        return ChatModifier.getInstance().isOn() && ChatModifier.getInstance().infinite.getValue(true) ? -2147483647 : list.size();
     }
 }

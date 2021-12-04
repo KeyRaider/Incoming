@@ -26,10 +26,10 @@ public class Logo extends Module {
     }
 
     public void renderLogo() {
-        int width = this.imageWidth.getValue();
-        int height = this.imageHeight.getValue();
-        int x = this.imageX.getValue();
-        int y = this.imageY.getValue();
+        int width = this.imageWidth.getValue(true);
+        int height = this.imageHeight.getValue(true);
+        int x = this.imageX.getValue(true);
+        int y = this.imageY.getValue(true);
         mc.renderEngine.bindTexture(mark);
         GlStateManager.color(255.0F, 255.0F, 255.0F);
         Gui.drawScaledCustomSizeModalRect(x - 2, y - 36, 7.0F, 7.0F, width - 7, height - 7, width, height, (float) width, (float) height);
@@ -39,8 +39,8 @@ public class Logo extends Module {
         if (!fullNullCheck()) {
             int width = this.renderer.scaledWidth;
             int height = this.renderer.scaledHeight;
-            this.color = ColorUtil.toRGBA(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue());
-            if (this.enabled.getValue()) {
+            this.color = ColorUtil.toRGBA(ClickGui.getInstance().red.getValue(true), ClickGui.getInstance().green.getValue(true), ClickGui.getInstance().blue.getValue(true));
+            if (this.enabled.getValue(true)) {
                 this.renderLogo();
             }
 

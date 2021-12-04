@@ -17,7 +17,7 @@ public class NickHider extends Module {
 
     @Override
     public void onEnable() {
-        Command.sendMessage(ChatFormatting.GRAY + "Success! Name succesfully changed to " + ChatFormatting.GREEN + NameString.getValue());
+        Command.sendMessage(ChatFormatting.GRAY + "Success! Name succesfully changed to " + ChatFormatting.GREEN + NameString.getValue(true));
     }
 
     public static NickHider getInstance() {

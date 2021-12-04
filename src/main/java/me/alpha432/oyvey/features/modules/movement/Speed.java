@@ -12,9 +12,9 @@ class Speed
         extends Module {
     private final Timer timer = new Timer();
     Setting<Mode> mode = this.register(new Setting<>("Mode", Mode.yPort));
-    Setting<Double> yPortSpeed = this.register(new Setting<>("YPort Speed", 0.6, 0.5, 1.5, v -> this.mode.getValue() == Mode.yPort));
-    Setting<Boolean> step = this.register(new Setting<>("Step", true, v -> this.mode.getValue() == Mode.yPort));
-    Setting<Double> vanillaSpeed = this.register(new Setting<>("Vanilla Speed", 1.0, 1.7, 10.0, v -> this.mode.getValue() == Mode.Vanilla));
+    Setting<Double> yPortSpeed = this.register(new Setting<>("YPort Speed", 0.6, 0.5, 1.5, v -> this.mode.getValue(true) == Mode.yPort));
+    Setting<Boolean> step = this.register(new Setting<>("Step", true, v -> this.mode.getValue(true) == Mode.yPort));
+    Setting<Double> vanillaSpeed = this.register(new Setting<>("Vanilla Speed", 1.0, 1.7, 10.0, v -> this.mode.getValue(true) == Mode.Vanilla));
 
     public Speed() {
         super("Speed", "YPort Speed.", Module.Category.MOVEMENT, false, false, false);
@@ -32,7 +32,7 @@ class Speed
     @Override
     public void onEnable() {
         PlayerUtil.getBaseMoveSpeed();
-        if (this.step.getValue()) {
+        if (this.step.getValue(true)) {
             if (Speed.fullNullCheck()) {
                 return;
             }
@@ -44,7 +44,7 @@ class Speed
     public void onDisable() {
         OyVey.timerManager.reset();
         this.timer.reset();
-        if (this.step.getValue()) {
+        if (this.step.getValue(true)) {
             Speed.mc.player.stepHeight = 0.6f;
         }
     }
@@ -55,28 +55,28 @@ class Speed
             this.disable();
             return;
         }
-        if (this.mode.getValue() == Mode.Vanilla) {
+        if (this.mode.getValue(true) == Mode.Vanilla) {
             if (Speed.mc.player == null || Speed.mc.world == null) {
                 return;
             }
-            double[] calc = MathUtil.directionSpeed(this.vanillaSpeed.getValue() / 10.0);
+            double[] calc = MathUtil.directionSpeed(this.vanillaSpeed.getValue(true) / 10.0);
             Speed.mc.player.motionX = calc[0];
             Speed.mc.player.motionZ = calc[1];
         }
-        if (this.mode.getValue() == Mode.yPort) {
+        if (this.mode.getValue(true) == Mode.yPort) {
             if (!PlayerUtil.isMoving(Speed.mc.player) || Speed.mc.player.isInWater() && Speed.mc.player.isInLava() || Speed.mc.player.collidedHorizontally) {
                 return;
             }
             if (Speed.mc.player.onGround) {
                 OyVey.timerManager.setTimer(1.15f);
                 Speed.mc.player.jump();
-                PlayerUtil.setSpeed(Speed.mc.player, PlayerUtil.getBaseMoveSpeed() + this.yPortSpeed.getValue() / 10.0);
+                PlayerUtil.setSpeed(Speed.mc.player, PlayerUtil.getBaseMoveSpeed() + this.yPortSpeed.getValue(true) / 10.0);
             } else {
                 Speed.mc.player.motionY = -1.0;
                 OyVey.timerManager.reset();
             }
         }
-        if (this.mode.getValue() == Mode.onGround) {
+        if (this.mode.getValue(true) == Mode.onGround) {
             if ((this.hop) & (mc.player.posY >= this.prevY + 0.399994D)) {
                 mc.player.motionY = -0.9D;
                 mc.player.posY = this.prevY;

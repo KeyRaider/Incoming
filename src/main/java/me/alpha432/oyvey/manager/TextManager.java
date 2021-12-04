@@ -26,7 +26,7 @@ public class TextManager
     public void init(boolean startup) {
         FontMod cFont = OyVey.moduleManager.getModuleByClass(FontMod.class);
         try {
-            this.setFontRenderer(new Font(cFont.fontName.getValue(), cFont.fontStyle.getValue(), cFont.fontSize.getValue()), cFont.antiAlias.getValue(), cFont.fractionalMetrics.getValue());
+            this.setFontRenderer(new Font(cFont.fontName.getValue(true), cFont.fontStyle.getValue(true), cFont.fontSize.getValue(true)), cFont.antiAlias.getValue(true), cFont.fractionalMetrics.getValue(true));
         } catch (Exception exception) {
             // empty catch block
         }
@@ -41,7 +41,7 @@ public class TextManager
             if (shadow) {
                 this.customFont.drawStringWithShadow(text, x, y, color);
             } else {
-               this.customFont.drawString(text, x, y, color);
+                this.customFont.drawString(text, x, y, color);
             }
             return;
         }

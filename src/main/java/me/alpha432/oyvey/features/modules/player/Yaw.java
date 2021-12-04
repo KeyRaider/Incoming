@@ -14,8 +14,8 @@ public class Yaw
 extends Module {
     public Setting<Boolean> lockYaw = this.register(new Setting<Boolean>("LockYaw", false));
     public Setting<Boolean> byDirection = this.register(new Setting<Boolean>("ByDirection", false));
-    public Setting<Direction> direction = this.register(new Setting<Object>("Direction", (Object)Direction.NORTH, v -> this.byDirection.getValue()));
-    public Setting<Integer> yaw = this.register(new Setting<Object>("Yaw", Integer.valueOf(0), Integer.valueOf(-180), Integer.valueOf(180), v -> this.byDirection.getValue() == false));
+    public Setting<Direction> direction = this.register(new Setting<Object>("Direction", (Object)Direction.NORTH, v -> this.byDirection.getValue(true)));
+    public Setting<Integer> yaw = this.register(new Setting<Object>("Yaw", Integer.valueOf(0), Integer.valueOf(-180), Integer.valueOf(180), v -> this.byDirection.getValue(true) == false));
     public Setting<Boolean> lockPitch = this.register(new Setting<Boolean>("LockPitch", false));
     public Setting<Integer> pitch = this.register(new Setting<Integer>("Pitch", 0, -180, 180));
 
@@ -25,9 +25,9 @@ extends Module {
 
     @SubscribeEvent
     public void onUpdateWalkingPlayer(UpdateWalkingPlayerEvent event) {
-        if (this.lockYaw.getValue().booleanValue()) {
-            if (this.byDirection.getValue().booleanValue()) {
-                switch (this.direction.getValue()) {
+        if (this.lockYaw.getValue(true).booleanValue()) {
+            if (this.byDirection.getValue(true).booleanValue()) {
+                switch (this.direction.getValue(true)) {
                     case NORTH: {
                         this.setYaw(180);
                         break;
@@ -61,14 +61,14 @@ extends Module {
                     }
                 }
             } else {
-                this.setYaw(this.yaw.getValue());
+                this.setYaw(this.yaw.getValue(true));
             }
         }
-        if (this.lockPitch.getValue().booleanValue()) {
+        if (this.lockPitch.getValue(true).booleanValue()) {
             if (Yaw.mc.player.isRiding()) {
-                Objects.requireNonNull(Yaw.mc.player.getRidingEntity()).rotationPitch = this.pitch.getValue().intValue();
+                Objects.requireNonNull(Yaw.mc.player.getRidingEntity()).rotationPitch = this.pitch.getValue(true).intValue();
             }
-            Yaw.mc.player.rotationPitch = this.pitch.getValue().intValue();
+            Yaw.mc.player.rotationPitch = this.pitch.getValue(true).intValue();
         }
     }
 

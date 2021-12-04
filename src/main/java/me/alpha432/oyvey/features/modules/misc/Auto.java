@@ -28,18 +28,18 @@ public class Auto
 extends Module {
     private static Auto INSTANCE = new Auto();
     public Setting<Mode> mode = this.register(new Setting<Mode>("Mode", Mode.Reconnect));
-    private final Setting<Boolean> logtrue = this.register(new Setting<Boolean>("Log", Boolean.valueOf(false), v -> this.mode.getValue() == Mode.Log));
-    private final Setting<Float> health = this.register(new Setting<Object>("Health", Float.valueOf(16.0f), Float.valueOf(0.1f), Float.valueOf(36.0f), v -> this.mode.getValue() == Mode.Log && this.logtrue.getValue() != false));
-    private final Setting<Boolean> bed = this.register(new Setting<Object>("Beds", Boolean.valueOf(true), v -> this.mode.getValue() == Mode.Log && this.logtrue.getValue() != false));
-    private final Setting<Float> range = this.register(new Setting<Object>("BedRange", Float.valueOf(6.0f), Float.valueOf(0.1f), Float.valueOf(36.0f), v -> this.mode.getValue() == Mode.Log && this.logtrue.getValue() != false && this.bed.getValue() != false));
-    private final Setting<Boolean> logout = this.register(new Setting<Object>("LogoutOff", Boolean.valueOf(true), v -> this.mode.getValue() == Mode.Log && this.logtrue.getValue() != false));
-    private final Setting<Boolean> reconnecttrue = this.register(new Setting<Boolean>("Reconnect", Boolean.valueOf(false), v -> this.mode.getValue() == Mode.Reconnect && this.logtrue.getValue() == false));
-    private final Setting<Integer> delay = this.register(new Setting<Object>("Delay", Integer.valueOf(5), Integer.valueOf(1), Integer.valueOf(15), v -> this.mode.getValue() == Mode.Reconnect && this.reconnecttrue.getValue() != false));
+    private final Setting<Boolean> logtrue = this.register(new Setting<Boolean>("Log", Boolean.valueOf(false), v -> this.mode.getValue(true) == Mode.Log));
+    private final Setting<Float> health = this.register(new Setting<Object>("Health", Float.valueOf(16.0f), Float.valueOf(0.1f), Float.valueOf(36.0f), v -> this.mode.getValue(true) == Mode.Log && this.logtrue.getValue(true) != false));
+    private final Setting<Boolean> bed = this.register(new Setting<Object>("Beds", Boolean.valueOf(true), v -> this.mode.getValue(true) == Mode.Log && this.logtrue.getValue(true) != false));
+    private final Setting<Float> range = this.register(new Setting<Object>("BedRange", Float.valueOf(6.0f), Float.valueOf(0.1f), Float.valueOf(36.0f), v -> this.mode.getValue(true) == Mode.Log && this.logtrue.getValue(true) != false && this.bed.getValue(true) != false));
+    private final Setting<Boolean> logout = this.register(new Setting<Object>("LogoutOff", Boolean.valueOf(true), v -> this.mode.getValue(true) == Mode.Log && this.logtrue.getValue(true) != false));
+    private final Setting<Boolean> reconnecttrue = this.register(new Setting<Boolean>("Reconnect", Boolean.valueOf(false), v -> this.mode.getValue(true) == Mode.Reconnect && this.logtrue.getValue(true) == false));
+    private final Setting<Integer> delay = this.register(new Setting<Object>("Delay", Integer.valueOf(5), Integer.valueOf(1), Integer.valueOf(15), v -> this.mode.getValue(true) == Mode.Reconnect && this.reconnecttrue.getValue(true) != false));
     private static ServerData serverData;
-    private final Setting<Boolean> respawntrue = this.register(new Setting<Object>("Respawn", Boolean.valueOf(false), v -> this.mode.getValue() == Mode.Respawn));
-    public Setting<Boolean> antiDeathScreen = this.register(new Setting<Object>("AntiDeathScreen", Boolean.valueOf(true), v -> this.mode.getValue() == Mode.Respawn && this.respawntrue.getValue() != false));
-    public Setting<Boolean> deathCoords = this.register(new Setting<Object>("DeathCoords", Boolean.valueOf(false), v -> this.mode.getValue() == Mode.Respawn && this.respawntrue.getValue() != false));
-    public Setting<Boolean> respawn = this.register(new Setting<Object>("Respawn", Boolean.valueOf(true), v -> this.mode.getValue() == Mode.Respawn && this.respawntrue.getValue() != false));
+    private final Setting<Boolean> respawntrue = this.register(new Setting<Object>("Respawn", Boolean.valueOf(false), v -> this.mode.getValue(true) == Mode.Respawn));
+    public Setting<Boolean> antiDeathScreen = this.register(new Setting<Object>("AntiDeathScreen", Boolean.valueOf(true), v -> this.mode.getValue(true) == Mode.Respawn && this.respawntrue.getValue(true) != false));
+    public Setting<Boolean> deathCoords = this.register(new Setting<Object>("DeathCoords", Boolean.valueOf(false), v -> this.mode.getValue(true) == Mode.Respawn && this.respawntrue.getValue(true) != false));
+    public Setting<Boolean> respawn = this.register(new Setting<Object>("Respawn", Boolean.valueOf(true), v -> this.mode.getValue(true) == Mode.Respawn && this.respawntrue.getValue(true) != false));
 
     public Auto() {
         super("Auto", "a", Module.Category.MISC, true, false, false);
@@ -59,9 +59,9 @@ extends Module {
 
     @Override
     public void onTick() {
-        if (!Auto.nullCheck() && Auto.mc.player.getHealth() <= this.health.getValue().floatValue()) {
+        if (!Auto.nullCheck() && Auto.mc.player.getHealth() <= this.health.getValue(true).floatValue()) {
             Auto.mc.player.connection.sendPacket((Packet)new SPacketDisconnect((ITextComponent)new TextComponentString("AutoLogged")));
-            if (this.logout.getValue().booleanValue()) {
+            if (this.logout.getValue(true).booleanValue()) {
                 this.disable();
             }
         }
@@ -70,9 +70,9 @@ extends Module {
     @SubscribeEvent
     public void onReceivePacket(PacketEvent.Receive event) {
         SPacketBlockChange packet;
-        if (event.getPacket() instanceof SPacketBlockChange && this.bed.getValue().booleanValue() && (packet = (SPacketBlockChange)event.getPacket()).getBlockState().getBlock() == Blocks.BED && Auto.mc.player.getDistanceSqToCenter(packet.getBlockPosition()) <= MathUtil.square(this.range.getValue().floatValue())) {
+        if (event.getPacket() instanceof SPacketBlockChange && this.bed.getValue(true).booleanValue() && (packet = (SPacketBlockChange)event.getPacket()).getBlockState().getBlock() == Blocks.BED && Auto.mc.player.getDistanceSqToCenter(packet.getBlockPosition()) <= MathUtil.square(this.range.getValue(true).floatValue())) {
             Auto.mc.player.connection.sendPacket((Packet)new SPacketDisconnect((ITextComponent)new TextComponentString("Logged")));
-            if (this.logout.getValue().booleanValue()) {
+            if (this.logout.getValue(true).booleanValue()) {
                 this.disable();
             }
         }
@@ -102,10 +102,10 @@ extends Module {
     @SubscribeEvent
     public void onDisplayDeathScreen(GuiOpenEvent event) {
         if (event.getGui() instanceof GuiGameOver) {
-            if (this.deathCoords.getValue().booleanValue() && event.getGui() instanceof GuiGameOver) {
+            if (this.deathCoords.getValue(true).booleanValue() && event.getGui() instanceof GuiGameOver) {
                 Command.sendMessage(String.format("You died at x %d y %d z %d", (int)Auto.mc.player.posX, (int)Auto.mc.player.posY, (int)Auto.mc.player.posZ));
             }
-            if (this.respawn.getValue() != false && Auto.mc.player.getHealth() <= 0.0f || this.antiDeathScreen.getValue().booleanValue() && Auto.mc.player.getHealth() > 0.0f) {
+            if (this.respawn.getValue(true) != false && Auto.mc.player.getHealth() <= 0.0f || this.antiDeathScreen.getValue(true).booleanValue() && Auto.mc.player.getHealth() > 0.0f) {
                 event.setCanceled(true);
                 Auto.mc.player.respawnPlayer();
             }
@@ -130,14 +130,14 @@ extends Module {
         }
 
         public void updateScreen() {
-            if (this.timer.passedS(((Integer)Auto.this.delay.getValue()).intValue())) {
+            if (this.timer.passedS(((Integer)Auto.this.delay.getValue(true)).intValue())) {
                 this.mc.displayGuiScreen((GuiScreen)new GuiConnecting(this.parentScreen, this.mc, serverData == null ? this.mc.currentServerData : serverData));
             }
         }
 
         public void drawScreen(int mouseX, int mouseY, float partialTicks) {
             super.drawScreen(mouseX, mouseY, partialTicks);
-            String s = "Reconnecting in " + MathUtil.round((double)((long)((Integer)Auto.this.delay.getValue() * 1000) - this.timer.getPassedTimeMs()) / 1000.0, 1);
+            String s = "Reconnecting in " + MathUtil.round((double)((long)((Integer)Auto.this.delay.getValue(true) * 1000) - this.timer.getPassedTimeMs()) / 1000.0, 1);
             Auto.this.renderer.drawString(s, this.width / 2 - Auto.this.renderer.getStringWidth(s) / 2, this.height - 16, 0xFFFFFF, true);
         }
     }

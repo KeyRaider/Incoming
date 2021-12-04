@@ -51,8 +51,8 @@ public class Announcer extends Module {
         eattingDelay++;
         heldItem = mc.player.getHeldItemMainhand().getDisplayName();
 
-        if (move.getValue()) {
-            if (lastPositionUpdate + (5000L * delay.getValue()) < System.currentTimeMillis()) {
+        if (move.getValue(true)) {
+            if (lastPositionUpdate + (5000L * delay.getValue(true)) < System.currentTimeMillis()) {
 
                 double d0 = lastPositionX - mc.player.lastTickPosX;
                 double d2 = lastPositionY - mc.player.lastTickPosY;
@@ -77,8 +77,8 @@ public class Announcer extends Module {
         if (event.getEntity() == mc.player) {
             if (event.getItem().getItem() instanceof ItemFood || event.getItem().getItem() instanceof ItemAppleGold) {
                 eaten++;
-                if (eattingDelay >= 300 * delay.getValue()) {
-                    if (eat.getValue() && eaten > randomNum) {
+                if (eattingDelay >= 300 * delay.getValue(true)) {
+                    if (eat.getValue(true) && eaten > randomNum) {
                         mc.player.sendChatMessage
                                 (eatMessage.replace("{amount}", eaten + "").replace("{name}", mc.player.getHeldItemMainhand().getDisplayName()));
                         eaten = 0;
@@ -93,8 +93,8 @@ public class Announcer extends Module {
     public void onBlockBreak(BlockDestructionEvent event) {
         blocksBroken++;
         int randomNum = ThreadLocalRandom.current().nextInt(1, 10 + 1);
-        if (blockBrokeDelay >= 300 * delay.getValue()) {
-            if (breakBlock.getValue() && blocksBroken > randomNum) {
+        if (blockBrokeDelay >= 300 * delay.getValue(true)) {
+            if (breakBlock.getValue(true) && blocksBroken > randomNum) {
                 String msg = breakMessage
                         .replace("{amount}", blocksBroken + "")
                         .replace("{name}", mc.world.getBlockState(event.getBlockPos()).getBlock().getLocalizedName());

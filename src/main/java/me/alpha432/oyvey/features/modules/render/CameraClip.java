@@ -10,7 +10,7 @@
 /*    */ {
 /* 11 */   private static CameraClip INSTANCE = new CameraClip();
 /* 12 */   public Setting<Boolean> extend = register(new Setting("Extend", Boolean.valueOf(false)));
-/* 13 */   public Setting<Double> distance = register(new Setting("Distance", Double.valueOf(10.0D), Double.valueOf(0.0D), Double.valueOf(50.0D), v -> ((Boolean)this.extend.getValue()).booleanValue(), "By how much you want to extend the distance."));
+/* 13 */   public Setting<Double> distance = register(new Setting("Distance", Double.valueOf(10.0D), Double.valueOf(0.0D), Double.valueOf(50.0D), v -> ((Boolean)this.extend.getValue(true)).booleanValue(), "By how much you want to extend the distance."));
 /*    */   
 /*    */   public CameraClip() {
 /* 16 */     super("CameraClip", "Makes your Camera clip.", Module.Category.RENDER, false, false, false);

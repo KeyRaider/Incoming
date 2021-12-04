@@ -25,8 +25,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Godmode
 extends Module {
     private final Setting<Mode> mode = this.register(new Setting<Mode>("Mode", Mode.Entity));
-    private final Setting<Boolean> entitytrue = this.register(new Setting<Object>("Entity", Boolean.valueOf(false), v -> this.mode.getValue() == Mode.Entity));
-    private final Setting<Boolean> remount = this.register(new Setting<Object>("Remount", Boolean.valueOf(false), v -> this.mode.getValue() == Mode.Entity && this.entitytrue.getValue() != false));
+    private final Setting<Boolean> entitytrue = this.register(new Setting<Object>("Entity", Boolean.valueOf(false), v -> this.mode.getValue(true) == Mode.Entity));
+    private final Setting<Boolean> remount = this.register(new Setting<Object>("Remount", Boolean.valueOf(false), v -> this.mode.getValue(true) == Mode.Entity && this.entitytrue.getValue(true) != false));
     public final Setting<Boolean> footsteps = this.register(new Setting<Boolean>("FootSteps", false));
     public Minecraft mc = Minecraft.getMinecraft();
     private Entity riding;
@@ -39,18 +39,18 @@ extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        if (this.mode.getValue() == Mode.Entity) {
+        if (this.mode.getValue(true) == Mode.Entity) {
             if (this.mc.world != null && this.mc.player.getRidingEntity() != null) {
                 this.entity = this.mc.player.getRidingEntity();
                 this.mc.renderGlobal.loadRenderers();
                 this.hideEntity();
                 this.mc.player.setPosition((double)Minecraft.getMinecraft().player.getPosition().getX(), (double)(Minecraft.getMinecraft().player.getPosition().getY() - 1), (double)Minecraft.getMinecraft().player.getPosition().getZ());
             }
-            if (this.mc.world != null && this.remount.getValue().booleanValue()) {
+            if (this.mc.world != null && this.remount.getValue(true).booleanValue()) {
                 this.remount.setValue(false);
             }
         }
-        if (this.mode.getValue() == Mode.Riding) {
+        if (this.mode.getValue(true) == Mode.Riding) {
             Minecraft mc = Minecraft.getMinecraft();
             if (mc.player.getRidingEntity() != null) {
                 this.riding = mc.player.getRidingEntity();
@@ -64,18 +64,18 @@ extends Module {
     @Override
     public void onDisable() {
         super.onDisable();
-        if (this.mode.getValue() == Mode.Entity) {
-            if (this.remount.getValue().booleanValue()) {
+        if (this.mode.getValue(true) == Mode.Entity) {
+            if (this.remount.getValue(true).booleanValue()) {
                 this.remount.setValue(false);
             }
             this.mc.player.dismountRidingEntity();
             this.mc.getConnection().sendPacket((Packet)new CPacketEntityAction((Entity)this.mc.player, CPacketEntityAction.Action.START_SNEAKING));
             this.mc.getConnection().sendPacket((Packet)new CPacketEntityAction((Entity)this.mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
         }
-        if (this.mode.getValue() == Mode.Riding && this.riding != null) {
+        if (this.mode.getValue(true) == Mode.Riding && this.riding != null) {
             Minecraft.getMinecraft().player.connection.sendPacket((Packet)new CPacketUseEntity(this.riding, EnumHand.MAIN_HAND));
         }
-        if (this.mode.getValue() == Mode.Lock) {
+        if (this.mode.getValue(true) == Mode.Lock) {
             Minecraft.getMinecraft().player.respawnPlayer();
         }
     }
@@ -85,7 +85,7 @@ extends Module {
         if (event.getPacket() instanceof CPacketPlayer.Position || event.getPacket() instanceof CPacketPlayer.PositionRotation) {
             event.setCanceled(true);
         }
-        if (this.mode.getValue() == Mode.Riding) {
+        if (this.mode.getValue(true) == Mode.Riding) {
             if (event.getPacket() instanceof CPacketUseEntity) {
                 Entity entity;
                 Minecraft mc = Minecraft.getMinecraft();
@@ -124,8 +124,8 @@ extends Module {
         if (this.entity == null) {
             return;
         }
-        if (this.mode.getValue() == Mode.Entity && event.getStage() == 0) {
-            if (this.remount.getValue().booleanValue() && Objects.requireNonNull(OyVey.moduleManager.getModuleByClass(Godmode.class)).isEnabled()) {
+        if (this.mode.getValue(true) == Mode.Entity && event.getStage() == 0) {
+            if (this.remount.getValue(true).booleanValue() && Objects.requireNonNull(OyVey.moduleManager.getModuleByClass(Godmode.class)).isEnabled()) {
                 this.showEntity(this.entity);
             }
             this.entity.setPositionAndRotation(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, Minecraft.getMinecraft().player.rotationYaw, Minecraft.getMinecraft().player.rotationPitch);
@@ -133,9 +133,9 @@ extends Module {
             this.mc.player.connection.sendPacket((Packet)new CPacketInput(this.mc.player.movementInput.moveForward, this.mc.player.movementInput.moveStrafe, false, false));
             this.mc.player.connection.sendPacket((Packet)new CPacketVehicleMove(this.entity));
         }
-        if (this.mode.getValue() == Mode.Riding && this.riding != null) {
+        if (this.mode.getValue(true) == Mode.Riding && this.riding != null) {
             this.riding.posX = this.mc.player.posX;
-            this.riding.posY = this.mc.player.posY + (double)(this.footsteps.getValue() != false ? 0.3f : 0.0f);
+            this.riding.posY = this.mc.player.posY + (double)(this.footsteps.getValue(true) != false ? 0.3f : 0.0f);
             this.riding.posZ = this.mc.player.posZ;
             this.riding.rotationYaw = Minecraft.getMinecraft().player.rotationYaw;
             this.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Rotation(this.mc.player.rotationYaw, this.mc.player.rotationPitch, true));
@@ -147,7 +147,7 @@ extends Module {
     @Override
     public void onUpdate() {
         Minecraft mc = Minecraft.getMinecraft();
-        if (this.mode.getValue() == Mode.Lock) {
+        if (this.mode.getValue(true) == Mode.Lock) {
             if (mc.currentScreen instanceof GuiGameOver) {
                 mc.displayGuiScreen(null);
             }

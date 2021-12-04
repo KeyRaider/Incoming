@@ -9,9 +9,9 @@
 /*    */   
 /* 10 */   public Setting<Server> server = register(new Setting("Server", Server.NORMAL));
 /*    */   
-/* 12 */   public Setting<Mode> mode = register(new Setting("Mode", Mode.NORMAL, v -> (this.server.getValue() == Server.NORMAL)));
-/* 13 */   public Setting<Float> prioCount = register(new Setting("PrioPlayerCount", Float.valueOf(0.0F), Float.valueOf(0.0F), Float.valueOf(1000.0F), v -> (this.mode.getValue() == Mode.PRIO)));
-/* 14 */   public Setting<Float> playerCount = register(new Setting("PlayerCount", Float.valueOf(0.0F), Float.valueOf(0.0F), Float.valueOf(1000.0F), v -> (this.mode.getValue() == Mode.NORMAL)));
+/* 12 */   public Setting<Mode> mode = register(new Setting("Mode", Mode.NORMAL, v -> (this.server.getValue(true) == Server.NORMAL)));
+/* 13 */   public Setting<Float> prioCount = register(new Setting("PrioPlayerCount", Float.valueOf(0.0F), Float.valueOf(0.0F), Float.valueOf(1000.0F), v -> (this.mode.getValue(true) == Mode.PRIO)));
+/* 14 */   public Setting<Float> playerCount = register(new Setting("PlayerCount", Float.valueOf(0.0F), Float.valueOf(0.0F), Float.valueOf(1000.0F), v -> (this.mode.getValue(true) == Mode.NORMAL)));
 /*    */ 
 /*    */ 
 /*    */   

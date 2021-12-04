@@ -58,12 +58,12 @@ public class SelfWeb extends Module {
 
         if (mc.player == null) return;
 
-        if (alwayson.getValue()) {
+        if (alwayson.getValue(true)) {
 
             EntityPlayer target = find_closest_target();
             if (target == null) return;
 
-            if (mc.player.getDistance(target) < webRange.getValue() && is_surround()) {
+            if (mc.player.getDistance(target) < webRange.getValue(true) && is_surround()) {
                 int last_slot = mc.player.inventory.currentItem;
                 mc.player.inventory.currentItem = new_slot;
                 mc.playerController.updateController();
@@ -160,7 +160,7 @@ public class SelfWeb extends Module {
 
             Vec3d hitVec = new Vec3d(neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).scale(0.5));
 
-            if (rotate.getValue()) {
+            if (rotate.getValue(true)) {
                 BlockInteractionUtil.faceVectorPacketInstant(hitVec);
             }
 

@@ -61,7 +61,7 @@ public class GodModule
 
     @Override
     public void onUpdate() {
-        if (this.render.getValue()) {
+        if (this.render.getValue(true)) {
             for (Entity entity : GodModule.mc.world.loadedEntityList) {
                 if (!(entity instanceof EntityEnderCrystal)) continue;
                 entity.setCustomNameTag(String.valueOf(entity.entityId));
@@ -81,21 +81,21 @@ public class GodModule
         if (event.getStage() == 0 && event.getPacket() instanceof CPacketPlayerTryUseItemOnBlock) {
             packet = event.getPacket();
             if (GodModule.mc.player.getHeldItem(packet.hand).getItem() instanceof ItemEndCrystal) {
-                if (this.checkPos.getValue() && !BlockUtill.canPlaceCrystal(packet.position, this.entitycheck.getValue(), this.oneDot15.getValue()) || this.checkPlayers()) {
+                if (this.checkPos.getValue(true) && !BlockUtill.canPlaceCrystal(packet.position, this.entitycheck.getValue(true), this.oneDot15.getValue(true)) || this.checkPlayers()) {
                     return;
                 }
                 this.updateEntityID();
-                for (int i = 1 - this.offset.getValue(); i <= this.attacks.getValue(); ++i) {
+                for (int i = 1 - this.offset.getValue(true); i <= this.attacks.getValue(true); ++i) {
                     this.attackID(packet.position, this.highestID + i);
                 }
             }
         }
-        if (event.getStage() == 0 && this.rotating && this.rotate.getValue() && event.getPacket() instanceof CPacketPlayer) {
+        if (event.getStage() == 0 && this.rotating && this.rotate.getValue(true) && event.getPacket() instanceof CPacketPlayer) {
             CPacketPlayer packet2 = event.getPacket();
             packet2.yaw = this.yaw;
             packet2.pitch = this.pitch;
             ++this.rotationPacketsSpoofed;
-            if (this.rotationPacketsSpoofed >= this.rotations.getValue()) {
+            if (this.rotationPacketsSpoofed >= this.rotations.getValue(true)) {
                 this.rotating = false;
                 this.rotationPacketsSpoofed = 0;
             }
@@ -105,8 +105,8 @@ public class GodModule
     private void attackID(BlockPos pos, int id) {
         Entity entity = GodModule.mc.world.getEntityByID(id);
         if (entity == null || entity instanceof EntityEnderCrystal) {
-            AttackThread attackThread = new AttackThread(id, pos, this.delay.getValue(), this);
-            if (this.delay.getValue() == 0) {
+            AttackThread attackThread = new AttackThread(id, pos, this.delay.getValue(true), this);
+            if (this.delay.getValue(true) == 0) {
                 attackThread.run();
             } else {
                 attackThread.start();
@@ -145,7 +145,7 @@ public class GodModule
     }
 
     private boolean checkPlayers() {
-        if (this.antiIllegal.getValue()) {
+        if (this.antiIllegal.getValue(true)) {
             for (EntityPlayer player : GodModule.mc.world.playerEntities) {
                 if (!this.checkItem(player.getHeldItemMainhand()) && !this.checkItem(player.getHeldItemOffhand()))
                     continue;

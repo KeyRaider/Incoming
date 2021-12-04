@@ -95,14 +95,14 @@ public class MixinEntityRenderer {
 
     @Inject(method = {"updateLightmap"}, at = {@At(value = "HEAD")}, cancellable = true)
     private void updateLightmap(float partialTicks, CallbackInfo info) {
-        if (NoRender.getInstance().isOn() && (NoRender.getInstance().skylight.getValue() == NoRender.Skylight.ENTITY || NoRender.getInstance().skylight.getValue() == NoRender.Skylight.ALL)) {
+        if (NoRender.getInstance().isOn() && (NoRender.getInstance().skylight.getValue(true) == NoRender.Skylight.ENTITY || NoRender.getInstance().skylight.getValue(true) == NoRender.Skylight.ALL)) {
             info.cancel();
         }
     }
 
     @Inject(method = {"hurtCameraEffect"}, at = {@At(value = "HEAD")}, cancellable = true)
     public void hurtCameraEffect(float ticks, CallbackInfo info) {
-        if (NoRender.getInstance().hurtCam.getValue() && NoRender.getInstance().isOn()) {
+        if (NoRender.getInstance().hurtCam.getValue(true) && NoRender.getInstance().isOn()) {
             info.cancel();
         }
     }
@@ -116,7 +116,7 @@ public class MixinEntityRenderer {
 
     @Redirect(method = {"getMouseOver"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getEntitiesInAABBexcluding(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/AxisAlignedBB;Lcom/google/common/base/Predicate;)Ljava/util/List;"))
     public List<Entity> getEntitiesInAABBexcludingHook(WorldClient worldClient, Entity entityIn, AxisAlignedBB boundingBox, com.google.common.base.Predicate<? super Entity> predicate) {
-        if (NoEntityTrace.getInstance().isOn() && (!NoEntityTrace.getInstance().pickaxe.getValue() || this.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe)) {
+        if (NoEntityTrace.getInstance().isOn() && (!NoEntityTrace.getInstance().pickaxe.getValue(true) || this.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe)) {
             return new ArrayList<>();
         }
         return worldClient.getEntitiesInAABBexcluding(entityIn, boundingBox, predicate);

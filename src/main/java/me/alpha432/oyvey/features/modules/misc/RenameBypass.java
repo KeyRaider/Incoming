@@ -19,9 +19,9 @@ extends Module {
     @Override
     public void onEnable() {
         if (RenameBypass.mc.world != null) {
-            RenameBypass.mc.playerController.windowClick(0, this.slotid.getValue().intValue(), 0, ClickType.PICKUP, (EntityPlayer)RenameBypass.mc.player);
+            RenameBypass.mc.playerController.windowClick(0, this.slotid.getValue(true).intValue(), 0, ClickType.PICKUP, (EntityPlayer)RenameBypass.mc.player);
             RenameBypass.mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, (EntityPlayer)RenameBypass.mc.player);
-            RenameBypass.mc.playerController.windowClick(0, this.slotid.getValue().intValue(), 0, ClickType.PICKUP, (EntityPlayer)RenameBypass.mc.player);
+            RenameBypass.mc.playerController.windowClick(0, this.slotid.getValue(true).intValue(), 0, ClickType.PICKUP, (EntityPlayer)RenameBypass.mc.player);
             this.disable();
         }
     }

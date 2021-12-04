@@ -15,8 +15,8 @@
 /* 15 */   public Setting<Boolean> portalChat = register(new Setting("Chat", Boolean.valueOf(true), "Allows you to chat in portals."));
 /* 16 */   public Setting<Boolean> godmode = register(new Setting("Godmode", Boolean.valueOf(false), "Portal Godmode."));
 /* 17 */   public Setting<Boolean> fastPortal = register(new Setting("FastPortal", Boolean.valueOf(false)));
-/* 18 */   public Setting<Integer> cooldown = register(new Setting("Cooldown", Integer.valueOf(5), Integer.valueOf(1), Integer.valueOf(10), v -> ((Boolean)this.fastPortal.getValue()).booleanValue(), "Portal cooldown."));
-/* 19 */   public Setting<Integer> time = register(new Setting("Time", Integer.valueOf(5), Integer.valueOf(0), Integer.valueOf(80), v -> ((Boolean)this.fastPortal.getValue()).booleanValue(), "Time in Portal"));
+/* 18 */   public Setting<Integer> cooldown = register(new Setting("Cooldown", Integer.valueOf(5), Integer.valueOf(1), Integer.valueOf(10), v -> ((Boolean)this.fastPortal.getValue(true)).booleanValue(), "Portal cooldown."));
+/* 19 */   public Setting<Integer> time = register(new Setting("Time", Integer.valueOf(5), Integer.valueOf(0), Integer.valueOf(80), v -> ((Boolean)this.fastPortal.getValue(true)).booleanValue(), "Time in Portal"));
 /*    */   
 /*    */   public BetterPortals() {
 /* 22 */     super("BetterPortals", "Tweaks for Portals", Module.Category.MISC, true, false, false);
@@ -36,7 +36,7 @@
 /*    */ 
 /*    */   
 /*    */   public String getDisplayInfo() {
-/* 39 */     if (((Boolean)this.godmode.getValue()).booleanValue()) {
+/* 39 */     if (((Boolean)this.godmode.getValue(true)).booleanValue()) {
 /* 40 */       return "Godmode";
 /*    */     }
 /* 42 */     return null;
@@ -44,7 +44,7 @@
 /*    */   
 /*    */   @SubscribeEvent
 /*    */   public void onPacketSend(PacketEvent.Send event) {
-/* 47 */     if (event.getStage() == 0 && ((Boolean)this.godmode.getValue()).booleanValue() && event.getPacket() instanceof net.minecraft.network.play.client.CPacketConfirmTeleport)
+/* 47 */     if (event.getStage() == 0 && ((Boolean)this.godmode.getValue(true)).booleanValue() && event.getPacket() instanceof net.minecraft.network.play.client.CPacketConfirmTeleport)
 /* 48 */       event.setCanceled(true); 
 /*    */   }
 /*    */ }

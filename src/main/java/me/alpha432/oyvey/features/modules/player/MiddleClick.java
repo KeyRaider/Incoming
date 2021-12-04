@@ -23,7 +23,7 @@ public class MiddleClick extends Module {
     private final Setting<Boolean> friend = this.register(new Setting("Friend", false));
 
     private final Setting<Boolean> pearl = this.register(new Setting("Pearl", false));
-    private final Setting<Mode> mode = this.register(new Setting<>("Mode", Mode.MiddleClick, v -> this.pearl.getValue()));
+    private final Setting<Mode> mode = this.register(new Setting<>("Mode", Mode.MiddleClick, v -> this.pearl.getValue(true)));
 
 
     public enum Mode {
@@ -37,8 +37,8 @@ public class MiddleClick extends Module {
 
     @Override
     public void onEnable() {
-        if (pearl.getValue()) {
-            if (!fullNullCheck() && this.mode.getValue() == Mode.Toggle) {
+        if (pearl.getValue(true)) {
+            if (!fullNullCheck() && this.mode.getValue(true) == Mode.Toggle) {
                 this.throwPearl();
                 this.disable();
             }
@@ -47,7 +47,7 @@ public class MiddleClick extends Module {
 
     @Override
     public void onUpdate() {
-        if (friend.getValue()) {
+        if (friend.getValue(true)) {
             if (Mouse.isButtonDown(2)) {
                 if (!this.clicked && mc.currentScreen == null) {
                     this.onClick();
@@ -62,9 +62,9 @@ public class MiddleClick extends Module {
 
     @Override
     public void onTick() {
-        if (pearl.getValue()) {
+        if (pearl.getValue(true)) {
 
-            if (this.mode.getValue() == Mode.MiddleClick) {
+            if (this.mode.getValue(true) == Mode.MiddleClick) {
                 if (Mouse.isButtonDown(2)) {
                     if (!this.clickedbutton) {
                         this.throwPearl();
@@ -78,20 +78,20 @@ public class MiddleClick extends Module {
     }
 
     private void onClick() {
-        if (friend.getValue()) {
+        if (friend.getValue(true)) {
 
             Entity entity;
             RayTraceResult result = mc.objectMouseOver;
             if (result != null && result.typeOfHit == RayTraceResult.Type.ENTITY && (entity = result.entityHit) instanceof EntityPlayer) {
                 if (OyVey.friendManager.isFriend(entity.getName())) {
                     OyVey.friendManager.removeFriend(entity.getName());
-                    if (FriendSettings.getInstance().notify.getValue()) {
+                    if (FriendSettings.getInstance().notify.getValue(true)) {
                         mc.player.connection.sendPacket(new CPacketChatMessage("/w " + entity.getName() + " I just removed you from my friends list on Quantum!"));
                     }
                     Command.sendMessage(ChatFormatting.RED + entity.getName() + ChatFormatting.RED + " has been unfriended.");
                 } else {
                     OyVey.friendManager.addFriend(entity.getName());
-                    if (FriendSettings.getInstance().notify.getValue()) {
+                    if (FriendSettings.getInstance().notify.getValue(true)) {
                         mc.player.connection.sendPacket(new CPacketChatMessage("/w " + entity.getName() + " I just added you to my friends list on Quantum!"));
                     }
                     Command.sendMessage(ChatFormatting.GREEN + entity.getName() + ChatFormatting.GREEN + " has been friended.");
@@ -103,7 +103,7 @@ public class MiddleClick extends Module {
 
 
     private void throwPearl() {
-        if (pearl.getValue()) {
+        if (pearl.getValue(true)) {
             boolean offhand;
             Entity entity;
             RayTraceResult result;

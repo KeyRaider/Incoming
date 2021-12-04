@@ -87,7 +87,7 @@ public class ShulkerAura extends Module {
         }
 
         if (temp != null)
-            if (debug.getValue()) Command.sendMessage("Target Set: " + temp.getName());
+            if (debug.getValue(true)) Command.sendMessage("Target Set: " + temp.getName());
 
         return temp;
     }
@@ -97,7 +97,7 @@ public class ShulkerAura extends Module {
 
         if (doShulker) {
             if (mc.player.inventory.currentItem != shulkerSlot) {
-                if (debug.getValue())
+                if (debug.getValue(true))
                     Command.sendMessage("Swapping to slot " + shulkerSlot);
                 mc.player.inventory.currentItem = shulkerSlot;
                 return;
@@ -113,7 +113,7 @@ public class ShulkerAura extends Module {
 
         if (doCrystal) {
             if (mc.player.inventory.currentItem != crystalSlot) {
-                if (debug.getValue())
+                if (debug.getValue(true))
                     Command.sendMessage("Swapping to slot " + crystalSlot);
                 mc.player.inventory.currentItem = crystalSlot;
                 return;
@@ -131,7 +131,7 @@ public class ShulkerAura extends Module {
         if (openShulker) {
             mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(shulkerSpot, EnumFacing.UP, EnumHand.MAIN_HAND, 0, 0, 0));
             if (mc.currentScreen instanceof GuiShulkerBox) {
-                if (debug.getValue()) Command.sendMessage("Closing Shulker");
+                if (debug.getValue(true)) Command.sendMessage("Closing Shulker");
                 mc.player.closeScreenAndDropStack();
                 openShulker = false;
                 detonate = true;
@@ -142,10 +142,10 @@ public class ShulkerAura extends Module {
 
         if (detonate) {
 
-            if (waitTicks++ > detonateDelay.getValue()) {
+            if (waitTicks++ > detonateDelay.getValue(true)) {
 
-                if (waitTicks - detonateDelay.getValue() > restartDelay.getValue()) {
-                    if (debug.getValue()) Command.sendMessage("Re-Attempting");
+                if (waitTicks - detonateDelay.getValue(true) > restartDelay.getValue(true)) {
+                    if (debug.getValue(true)) Command.sendMessage("Re-Attempting");
                     detonate = false;
                     doCrystal = true;
                 }
@@ -169,7 +169,7 @@ public class ShulkerAura extends Module {
         }
 
         if (finishedDetonate) {
-            if (waitTicks++ > endDelay.getValue()) {
+            if (waitTicks++ > endDelay.getValue(true)) {
                 finishedDetonate = false;
             }
 
@@ -206,10 +206,10 @@ public class ShulkerAura extends Module {
                         if (mc.world.getBlockState(new BlockPos(offset4)).getBlock() == Blocks.AIR) {
                             if (mc.world.getBlockState(new BlockPos(offset5)).getBlock() == Blocks.AIR || shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
                                 if (mc.world.getBlockState(new BlockPos(offset6)).getBlock() != Blocks.AIR) {
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Target is vulnerable!");
 
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Method 1");
 
                                     spoofDirection = direction.EAST;
@@ -218,7 +218,7 @@ public class ShulkerAura extends Module {
                                     crystalSlot = -1;
 
                                     if (shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
-                                        if (debug.getValue())
+                                        if (debug.getValue(true))
                                             Command.sendMessage("Shulker already in place.");
                                         shulkerSlot = 1337;
                                     } else {
@@ -273,10 +273,10 @@ public class ShulkerAura extends Module {
                         if (mc.world.getBlockState(new BlockPos(offset4)).getBlock() == Blocks.AIR) {
                             if (mc.world.getBlockState(new BlockPos(offset5)).getBlock() == Blocks.AIR || shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
                                 if (mc.world.getBlockState(new BlockPos(offset6)).getBlock() != Blocks.AIR) {
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Target is vulnerable!");
 
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Method 2");
 
                                     spoofDirection = direction.WEST;
@@ -285,7 +285,7 @@ public class ShulkerAura extends Module {
                                     crystalSlot = -1;
 
                                     if (shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
-                                        if (debug.getValue())
+                                        if (debug.getValue(true))
                                             Command.sendMessage("Shulker already in place.");
                                         shulkerSlot = 1337;
                                     } else {
@@ -330,10 +330,10 @@ public class ShulkerAura extends Module {
                         if (mc.world.getBlockState(new BlockPos(offset4)).getBlock() == Blocks.AIR) {
                             if (mc.world.getBlockState(new BlockPos(offset5)).getBlock() == Blocks.AIR || shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
                                 if (mc.world.getBlockState(new BlockPos(offset6)).getBlock() != Blocks.AIR) {
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Target is vulnerable!");
 
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Method 3");
 
                                     spoofDirection = direction.SOUTH;
@@ -342,7 +342,7 @@ public class ShulkerAura extends Module {
                                     crystalSlot = -1;
 
                                     if (shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
-                                        if (debug.getValue())
+                                        if (debug.getValue(true))
                                             Command.sendMessage("Shulker already in place.");
                                         shulkerSlot = 1337;
                                     } else {
@@ -387,10 +387,10 @@ public class ShulkerAura extends Module {
                         if (mc.world.getBlockState(new BlockPos(offset4)).getBlock() == Blocks.AIR) {
                             if (mc.world.getBlockState(new BlockPos(offset5)).getBlock() == Blocks.AIR || shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
                                 if (mc.world.getBlockState(new BlockPos(offset6)).getBlock() != Blocks.AIR) {
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Target is vulnerable!");
 
-                                    if (debug.getValue())
+                                    if (debug.getValue(true))
                                         Command.sendMessage("Method 4");
 
                                     spoofDirection = direction.NORTH;
@@ -399,7 +399,7 @@ public class ShulkerAura extends Module {
                                     crystalSlot = -1;
 
                                     if (shulkerList.contains(mc.world.getBlockState(new BlockPos(offset5)).getBlock())) {
-                                        if (debug.getValue())
+                                        if (debug.getValue(true))
                                             Command.sendMessage("Shulker already in place.");
                                         shulkerSlot = 1337;
                                     } else {
@@ -457,29 +457,29 @@ public class ShulkerAura extends Module {
     }
 
     private void placeCrystal(BlockPos pos) {
-        if (debug.getValue())
+        if (debug.getValue(true))
             Command.sendMessage("Debug " + pos); //yes
         mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, EnumFacing.UP, EnumHand.MAIN_HAND, 0.0f, 0.0f, 0.0f));
     }
 
     private void placeBlock(BlockPos pos) {
         if (spoofDirection == direction.NORTH) {
-            if (rotate.getValue()) {
+            if (rotate.getValue(true)) {
                 mc.player.rotationYaw = 180;
             }
             mc.player.connection.sendPacket(new CPacketPlayer.Rotation(180, 0, mc.player.onGround));
         } else if (spoofDirection == direction.SOUTH) {
-            if (rotate.getValue()) {
+            if (rotate.getValue(true)) {
                 mc.player.rotationYaw = 0;
             }
             mc.player.connection.sendPacket(new CPacketPlayer.Rotation(0, 0, mc.player.onGround));
         } else if (spoofDirection == direction.WEST) {
-            if (rotate.getValue()) {
+            if (rotate.getValue(true)) {
                 mc.player.rotationYaw = 90;
             }
             mc.player.connection.sendPacket(new CPacketPlayer.Rotation(90, 0, mc.player.onGround));
         } else if (spoofDirection == direction.EAST) {
-            if (rotate.getValue()) {
+            if (rotate.getValue(true)) {
                 mc.player.rotationYaw = -90;
             }
             mc.player.connection.sendPacket(new CPacketPlayer.Rotation(-90, 0, mc.player.onGround));

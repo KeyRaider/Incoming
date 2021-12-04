@@ -20,14 +20,14 @@ public class AntiVoid
         if (AntiVoid.fullNullCheck()) {
             return;
         }
-        if (!AntiVoid.mc.player.noClip && AntiVoid.mc.player.posY <= yLevel.getValue()) {
+        if (!AntiVoid.mc.player.noClip && AntiVoid.mc.player.posY <= yLevel.getValue(true)) {
             RayTraceResult trace = AntiVoid.mc.world.rayTraceBlocks(AntiVoid.mc.player.getPositionVector(), new Vec3d(AntiVoid.mc.player.posX, 0.0, AntiVoid.mc.player.posZ), false, false, false);
             if (trace != null && trace.typeOfHit == RayTraceResult.Type.BLOCK) {
                 return;
             }
-            AntiVoid.mc.player.motionY = yForce.getValue();
+            AntiVoid.mc.player.motionY = yForce.getValue(true);
             if (AntiVoid.mc.player.getRidingEntity() != null) {
-                AntiVoid.mc.player.getRidingEntity().motionY = yForce.getValue();
+                AntiVoid.mc.player.getRidingEntity().motionY = yForce.getValue(true);
             }
         }
     }

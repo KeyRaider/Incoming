@@ -41,47 +41,47 @@ class EntityNotifier
 
     @Override
     public void onUpdate() {
-        if (this.Ghasts.getValue()) {
+        if (this.Ghasts.getValue(true)) {
             for (Entity entity : EntityNotifier.mc.world.getLoadedEntityList()) {
                 if (!(entity instanceof EntityGhast) || this.ghasts.contains(entity)) continue;
-                if (this.Chat.getValue()) {
+                if (this.Chat.getValue(true)) {
                     Command.sendMessage("Ghast Detected at: " + Math.round(entity.getPosition().getX()) + "X, " + Math.round(entity.getPosition().getY()) + "Y, " + Math.round(entity.getPosition().getZ()) + "Z.");
                 }
                 this.ghasts.add(entity);
-                if (!this.Sound.getValue()) continue;
+                if (!this.Sound.getValue(true)) continue;
                 EntityNotifier.mc.player.playSound(SoundEvents.BLOCK_ANVIL_DESTROY, 1.0f, 1.0f);
             }
         }
-        if (this.Donkeys.getValue()) {
+        if (this.Donkeys.getValue(true)) {
             for (Entity entity : EntityNotifier.mc.world.getLoadedEntityList()) {
                 if (!(entity instanceof EntityDonkey) || this.donkeys.contains(entity)) continue;
-                if (this.Chat.getValue()) {
+                if (this.Chat.getValue(true)) {
                     Command.sendMessage("Donkey Detected at: " + Math.round(entity.getPosition().getX()) + "X, " + Math.round(entity.getPosition().getY()) + "Y, " + Math.round(entity.getPosition().getZ()) + "Z.");
                 }
                 this.donkeys.add(entity);
-                if (!this.Sound.getValue()) continue;
+                if (!this.Sound.getValue(true)) continue;
                 EntityNotifier.mc.player.playSound(SoundEvents.BLOCK_ANVIL_DESTROY, 1.0f, 1.0f);
             }
         }
-        if (this.Mules.getValue()) {
+        if (this.Mules.getValue(true)) {
             for (Entity entity : EntityNotifier.mc.world.getLoadedEntityList()) {
                 if (!(entity instanceof EntityMule) || this.mules.contains(entity)) continue;
-                if (this.Chat.getValue()) {
+                if (this.Chat.getValue(true)) {
                     Command.sendMessage("Mule Detected at: " + Math.round(entity.getPosition().getX()) + "X, " + Math.round(entity.getPosition().getY()) + "Y, " + Math.round(entity.getPosition().getZ()) + "Z.");
                 }
                 this.mules.add(entity);
-                if (!this.Sound.getValue()) continue;
+                if (!this.Sound.getValue(true)) continue;
                 EntityNotifier.mc.player.playSound(SoundEvents.BLOCK_ANVIL_DESTROY, 1.0f, 1.0f);
             }
         }
-        if (this.Llamas.getValue()) {
+        if (this.Llamas.getValue(true)) {
             for (Entity entity : EntityNotifier.mc.world.getLoadedEntityList()) {
                 if (!(entity instanceof EntityLlama) || this.llamas.contains(entity)) continue;
-                if (this.Chat.getValue()) {
+                if (this.Chat.getValue(true)) {
                     Command.sendMessage("Llama Detected at: " + Math.round(entity.getPosition().getX()) + "X, " + Math.round(entity.getPosition().getY()) + "Y, " + Math.round(entity.getPosition().getZ()) + "Z.");
                 }
                 this.llamas.add(entity);
-                if (!this.Sound.getValue()) continue;
+                if (!this.Sound.getValue(true)) continue;
                 EntityNotifier.mc.player.playSound(SoundEvents.BLOCK_ANVIL_DESTROY, 1.0f, 1.0f);
             }
         }

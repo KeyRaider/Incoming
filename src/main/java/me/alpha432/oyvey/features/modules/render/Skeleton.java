@@ -57,18 +57,18 @@ public class Skeleton
         if (!BlockUtil.isPosInFov(new BlockPos(e.posX, e.posY, e.posZ))) {
             return;
         }
-        if (e.isInvisible() && !this.invisibles.getValue()) {
+        if (e.isInvisible() && !this.invisibles.getValue(true)) {
             return;
         }
         float[][] entPos = entities.get(e);
         if (entPos != null && e.isEntityAlive() && !e.isDead && e != Skeleton.mc.player && !e.isPlayerSleeping()) {
             GL11.glPushMatrix();
             GL11.glEnable(2848);
-            GL11.glLineWidth(this.lineWidth.getValue());
+            GL11.glLineWidth(this.lineWidth.getValue(true));
             if (OyVey.friendManager.isFriend(e.getName())) {
-                GlStateManager.color(0.0f, 191.0f, 230.0f, (float)this.alpha.getValue());
+                GlStateManager.color(0.0f, 191.0f, 230.0f, (float)this.alpha.getValue(true));
             } else {
-                GlStateManager.color((float)ClickGui.getInstance().red.getValue() / 255.0f, (float)ClickGui.getInstance().green.getValue() / 255.0f, (float)ClickGui.getInstance().blue.getValue() / 255.0f, (float)this.alpha.getValue());
+                GlStateManager.color((float)ClickGui.getInstance().red.getValue(true) / 255.0f, (float)ClickGui.getInstance().green.getValue(true) / 255.0f, (float)ClickGui.getInstance().blue.getValue(true) / 255.0f, (float)this.alpha.getValue(true));
             }
             Vec3d vec = this.getVec3(event, e);
             double x = vec.x - Skeleton.mc.getRenderManager().renderPosX;

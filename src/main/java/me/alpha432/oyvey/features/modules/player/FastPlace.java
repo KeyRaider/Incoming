@@ -17,9 +17,9 @@ import net.minecraft.util.math.RayTraceResult;
 public class FastPlace
         extends Module {
     private final Setting<Boolean> all = this.register(new Setting<>("All", false));
-    private final Setting<Boolean> obby = this.register(new Setting<Object>("Obsidian", Boolean.FALSE, v -> !this.all.getValue()));
-    private final Setting<Boolean> crystals = this.register(new Setting<Object>("Crystals", Boolean.FALSE, v -> !this.all.getValue()));
-    private final Setting<Boolean> exp = this.register(new Setting<Object>("Experience", Boolean.FALSE, v -> !this.all.getValue()));
+    private final Setting<Boolean> obby = this.register(new Setting<Object>("Obsidian", Boolean.FALSE, v -> !this.all.getValue(true)));
+    private final Setting<Boolean> crystals = this.register(new Setting<Object>("Crystals", Boolean.FALSE, v -> !this.all.getValue(true)));
+    private final Setting<Boolean> exp = this.register(new Setting<Object>("Experience", Boolean.FALSE, v -> !this.all.getValue(true)));
     private final Setting<Boolean> PacketCrystal = this.register(new Setting<>("PacketCrystal", false));
     private BlockPos mousePos = null;
 
@@ -32,19 +32,19 @@ public class FastPlace
         if (FastPlace.fullNullCheck()) {
             return;
         }
-        if (InventoryUtil.holdingItem(ItemExpBottle.class) && this.exp.getValue()) {
+        if (InventoryUtil.holdingItem(ItemExpBottle.class) && this.exp.getValue(true)) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if (InventoryUtil.holdingItem(BlockObsidian.class) && this.obby.getValue()) {
+        if (InventoryUtil.holdingItem(BlockObsidian.class) && this.obby.getValue(true)) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if (this.all.getValue()) {
+        if (this.all.getValue(true)) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if (InventoryUtil.holdingItem(ItemEndCrystal.class) && (this.crystals.getValue() || this.all.getValue())) {
+        if (InventoryUtil.holdingItem(ItemEndCrystal.class) && (this.crystals.getValue(true) || this.all.getValue(true))) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if (this.PacketCrystal.getValue() && FastPlace.mc.gameSettings.keyBindUseItem.isKeyDown()) {
+        if (this.PacketCrystal.getValue(true) && FastPlace.mc.gameSettings.keyBindUseItem.isKeyDown()) {
             boolean offhand;
             offhand = FastPlace.mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL;
             if (offhand || FastPlace.mc.player.getHeldItemMainhand().getItem() == Items.END_CRYSTAL) {

@@ -29,7 +29,7 @@ public class AutoFish extends Module {
     public void onTick() {
         if (cast && nospam) {
             mc.rightClickMouse();
-            if (swing.getValue()) {
+            if (swing.getValue(true)) {
                 mc.player.swingArm(EnumHand.MAIN_HAND);
             }
             nospam = false;
@@ -44,7 +44,7 @@ public class AutoFish extends Module {
             SPacketSoundEffect packet = (SPacketSoundEffect) event.getPacket();
             if (packet.getSound() == SoundEvents.ENTITY_BOBBER_SPLASH) {
                 mc.rightClickMouse();
-                if (swing.getValue()) {
+                if (swing.getValue(true)) {
                     mc.player.swingArm(EnumHand.MAIN_HAND);
                 }
                 cast = true;

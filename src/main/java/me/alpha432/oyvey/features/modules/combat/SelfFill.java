@@ -24,10 +24,10 @@ public class SelfFill extends Module {
     @Override
     public void onEnable() {
 
-        if (timerfill.getValue()) {
+        if (timerfill.getValue(true)) {
             setTimer(50.0f);
         }
-        if (toggleRStep.getValue()) {
+        if (toggleRStep.getValue(true)) {
             OyVey.moduleManager.getModuleByName("ReverseStep").isEnabled(); {
                 ReverseStep.getInstance().disable();
             }
@@ -42,7 +42,7 @@ public class SelfFill extends Module {
 
     @Override
     public void onDisable() {
-        if (toggleRStep.getValue()) {
+        if (toggleRStep.getValue(true)) {
             OyVey.moduleManager.getModuleByName("ReverseStep").isDisabled(); {
                 ReverseStep.getInstance().enable();
             }
@@ -77,7 +77,7 @@ public class SelfFill extends Module {
 
     @Override
     public String getDisplayInfo() {
-        if (timerfill.getValue()) {
+        if (timerfill.getValue(true)) {
             return "Timer";
         } else {
             return "Burrow";

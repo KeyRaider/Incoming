@@ -24,12 +24,12 @@ extends Module {
 
     public AntiKick() {
         super("AntiKick", "ak", Module.Category.PLAYER, true, false, true);
-        this.timeoutLast = this.timeout.getValue();
+        this.timeoutLast = this.timeout.getValue(true);
     }
 
     @Override
     public String getDisplayInfo() {
-        return this.mode.getValue().name() + (this.mode.getValue() == Mode.Change ? " " + this.timeoutLast : "") + " | " + (this.nettyChannel == null ? "NC" : "OK");
+        return this.mode.getValue(true).name() + (this.mode.getValue(true) == Mode.Change ? " " + this.timeoutLast : "") + " | " + (this.nettyChannel == null ? "NC" : "OK");
     }
 
     @SubscribeEvent
@@ -37,23 +37,23 @@ extends Module {
         this.nettyChannel = event.getChannel();
         this.handlerRemoved = false;
         if (this.isEnabled()) {
-            this.updateTimeout(this.timeoutLast, this.mode.getValue() == Mode.Change);
+            this.updateTimeout(this.timeoutLast, this.mode.getValue(true) == Mode.Change);
         }
     }
 
     @SubscribeEvent
     public void onPlayerUpdate(PlayerUpdateEvent event) {
-        if (this.isEnabled() && this.changeThrottle.passedMs(1000L) && this.timeout.getValue() != this.timeoutLast && this.nettyChannel != null) {
-            this.timeoutLast = this.timeout.getValue();
+        if (this.isEnabled() && this.changeThrottle.passedMs(1000L) && this.timeout.getValue(true) != this.timeoutLast && this.nettyChannel != null) {
+            this.timeoutLast = this.timeout.getValue(true);
             this.changeThrottle.reset();
-            this.updateTimeout(this.timeoutLast, this.mode.getValue() == Mode.Change);
+            this.updateTimeout(this.timeoutLast, this.mode.getValue(true) == Mode.Change);
         }
     }
 
     @SubscribeEvent
     public void onSettingsUpdate(ClientEvent event) {
         if (event.getStage() == 2 && event.getSetting().getFeature().equals(this) && event.getSetting().equals(this.mode)) {
-            this.timeoutLast = this.timeout.getValue();
+            this.timeoutLast = this.timeout.getValue(true);
             this.updateTimeout(this.timeoutLast, this.mode.getPlannedValue() == Mode.Change);
         }
     }

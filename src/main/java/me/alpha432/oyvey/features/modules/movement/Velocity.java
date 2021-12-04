@@ -1,6 +1,5 @@
 package me.alpha432.oyvey.features.modules.movement;
 
-import me.alpha432.oyvey.features.modules.movement.IceSpeed;
 import me.alpha432.oyvey.features.setting.Setting;
 import me.alpha432.oyvey.features.modules.Module;
 import me.alpha432.oyvey.event.events.PacketEvent;
@@ -41,7 +40,7 @@ public class Velocity extends Module {
     }
 
     public void onUpdate() {
-        if (IceSpeed.getINSTANCE().isOff() && this.ice.getValue().booleanValue()) {
+        if (IceSpeed.getINSTANCE().isOff() && this.ice.getValue(true).booleanValue()) {
             Blocks.ICE.slipperiness = 0.6F;
             Blocks.PACKED_ICE.slipperiness = 0.6F;
             Blocks.FROSTED_ICE.slipperiness = 0.6F;
@@ -62,16 +61,16 @@ public class Velocity extends Module {
             if (event.getPacket() instanceof SPacketEntityVelocity) {
                 SPacketEntityVelocity velocity = event.getPacket();
                 if (velocity.getEntityID() == mc.player.entityId) {
-                    if (this.horizontal.getValue().floatValue() == 0.0F && this.vertical.getValue().floatValue() == 0.0F) {
+                    if (this.horizontal.getValue(true).floatValue() == 0.0F && this.vertical.getValue(true).floatValue() == 0.0F) {
                         event.setCanceled(true);
                         return;
                     }
-                    velocity.motionX = (int) (velocity.motionX * this.horizontal.getValue().floatValue());
-                    velocity.motionY = (int) (velocity.motionY * this.vertical.getValue().floatValue());
-                    velocity.motionZ = (int) (velocity.motionZ * this.horizontal.getValue().floatValue());
+                    velocity.motionX = (int) (velocity.motionX * this.horizontal.getValue(true).floatValue());
+                    velocity.motionY = (int) (velocity.motionY * this.vertical.getValue(true).floatValue());
+                    velocity.motionZ = (int) (velocity.motionZ * this.horizontal.getValue(true).floatValue());
                 }
             }
-            if (event.getPacket() instanceof SPacketEntityStatus && this.bobbers.getValue().booleanValue()) {
+            if (event.getPacket() instanceof SPacketEntityStatus && this.bobbers.getValue(true).booleanValue()) {
                 SPacketEntityStatus packet = event.getPacket();
                 if (packet.getOpCode() == 31) {
                     Entity entity = packet.getEntity(mc.world);
@@ -82,28 +81,28 @@ public class Velocity extends Module {
                     }
                 }
             }
-            if (this.explosions.getValue().booleanValue() && event.getPacket() instanceof SPacketExplosion) {
+            if (this.explosions.getValue(true).booleanValue() && event.getPacket() instanceof SPacketExplosion) {
                 SPacketExplosion velocity = event.getPacket();
-                velocity.motionX *= this.horizontal.getValue().floatValue();
-                velocity.motionY *= this.vertical.getValue().floatValue();
-                velocity.motionZ *= this.horizontal.getValue().floatValue();
+                velocity.motionX *= this.horizontal.getValue(true).floatValue();
+                velocity.motionY *= this.vertical.getValue(true).floatValue();
+                velocity.motionZ *= this.horizontal.getValue(true).floatValue();
             }
         }
     }
 
     @SubscribeEvent
     public void onPush(PushEvent event) {
-        if (event.getStage() == 0 && this.noPush.getValue().booleanValue() && event.entity.equals(mc.player)) {
-            if (this.horizontal.getValue().floatValue() == 0.0F && this.vertical.getValue().floatValue() == 0.0F) {
+        if (event.getStage() == 0 && this.noPush.getValue(true).booleanValue() && event.entity.equals(mc.player)) {
+            if (this.horizontal.getValue(true).floatValue() == 0.0F && this.vertical.getValue(true).floatValue() == 0.0F) {
                 event.setCanceled(true);
                 return;
             }
-            event.x = -event.x * this.horizontal.getValue().floatValue();
-            event.y = -event.y * this.vertical.getValue().floatValue();
-            event.z = -event.z * this.horizontal.getValue().floatValue();
-        } else if (event.getStage() == 1 && this.blocks.getValue().booleanValue()) {
+            event.x = -event.x * this.horizontal.getValue(true).floatValue();
+            event.y = -event.y * this.vertical.getValue(true).floatValue();
+            event.z = -event.z * this.horizontal.getValue(true).floatValue();
+        } else if (event.getStage() == 1 && this.blocks.getValue(true).booleanValue()) {
             event.setCanceled(true);
-        } else if (event.getStage() == 2 && this.water.getValue().booleanValue() && mc.player != null && mc.player.equals(event.entity)) {
+        } else if (event.getStage() == 2 && this.water.getValue(true).booleanValue() && mc.player != null && mc.player.equals(event.entity)) {
             event.setCanceled(true);
         }
     }

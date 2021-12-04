@@ -33,7 +33,7 @@ public class OyVeyGui
     private final ArrayList<Component> components = new ArrayList<>();
     public static ParticleGenerator particleGenerator = new ParticleGenerator(200, mc.displayWidth, mc.displayHeight);
     private final ArrayList<Snow> _snowList = new ArrayList<>();
-    int color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue()).getRGB();
+    int color = new Color(ClickGui.getInstance().red.getValue(true), ClickGui.getInstance().green.getValue(true), ClickGui.getInstance().blue.getValue(true)).getRGB();
 
 
     public OyVeyGui() {
@@ -110,11 +110,11 @@ public class OyVeyGui
 
 
         particleGenerator.drawParticles(mouseX, mouseY);
-        drawGradientRect(0, 0, this.width, this.height * 2 + 20, 0, ClickGui.getInstance().rainbow.getValue() ? getRainbowInt(10, 0.5f, 1, 1) : color);
+        drawGradientRect(0, 0, this.width, this.height * 2 + 20, 0, ClickGui.getInstance().rainbow.getValue(true) ? getRainbowInt(10, 0.5f, 1, 1) : color);
         final ScaledResolution res = new ScaledResolution(mc);
 
 
-        if (!_snowList.isEmpty() && ClickGui.getInstance().snowing.getValue()) {
+        if (!_snowList.isEmpty() && ClickGui.getInstance().snowing.getValue(true)) {
             _snowList.forEach(snow -> snow.Update(res));
         }
     }

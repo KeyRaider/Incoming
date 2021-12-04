@@ -43,7 +43,7 @@ public class XRay
     public void onSettingChange(ClientEvent event) {
         if (event.getStage() == 2 && event.getSetting() != null && event.getSetting().getFeature() != null && event.getSetting().getFeature().equals(this)) {
             if (event.getSetting().equals(this.newBlock) && !this.shouldRender(this.newBlock.getPlannedValue())) {
-                this.register(new Setting<Object>(this.newBlock.getPlannedValue(), Boolean.TRUE, v -> this.showBlocks.getValue()));
+                this.register(new Setting<Object>(this.newBlock.getPlannedValue(), Boolean.TRUE, v -> this.showBlocks.getValue(true)));
                 Command.sendMessage("<Xray> Added new Block: " + this.newBlock.getPlannedValue());
                 if (this.isOn()) {
                     XRay.mc.renderGlobal.loadRenderers();
@@ -54,7 +54,7 @@ public class XRay
                 if (setting.equals(this.enabled) || setting.equals(this.drawn) || setting.equals(this.bind) || setting.equals(this.newBlock) || setting.equals(this.showBlocks)) {
                     return;
                 }
-                if (setting.getValue() != null && !(setting.getPlannedValue()).booleanValue()) {
+                if (setting.getValue(true) != null && !(setting.getPlannedValue()).booleanValue()) {
                     this.unregister(setting);
                     if (this.isOn()) {
                         XRay.mc.renderGlobal.loadRenderers();

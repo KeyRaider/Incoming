@@ -17,7 +17,7 @@ public class AutoLog
         extends Module {
     private final Setting<Float> health = this.register(new Setting<Float>("Health", Float.valueOf(16.0f), Float.valueOf(0.1f), Float.valueOf(36.0f)));
     private final Setting<Boolean> bed = this.register(new Setting<Boolean>("Beds", true));
-    private final Setting<Float> range = this.register(new Setting<Object>("BedRange", Float.valueOf(6.0f), Float.valueOf(0.1f), Float.valueOf(36.0f), v -> this.bed.getValue()));
+    private final Setting<Float> range = this.register(new Setting<Object>("BedRange", Float.valueOf(6.0f), Float.valueOf(0.1f), Float.valueOf(36.0f), v -> this.bed.getValue(true)));
     private final Setting<Boolean> logout = this.register(new Setting<Boolean>("LogoutOff", true));
     private static AutoLog INSTANCE = new AutoLog();
 
@@ -39,10 +39,10 @@ public class AutoLog
 
     @Override
     public void onTick() {
-        if (!AutoLog.nullCheck() && AutoLog.mc.player.getHealth() <= this.health.getValue().floatValue()) {
+        if (!AutoLog.nullCheck() && AutoLog.mc.player.getHealth() <= this.health.getValue(true).floatValue()) {
             OyVey.moduleManager.disableModule("AutoReconnect");
             AutoLog.mc.player.connection.sendPacket(new SPacketDisconnect(new TextComponentString("AutoLogged")));
-            if (this.logout.getValue().booleanValue()) {
+            if (this.logout.getValue(true).booleanValue()) {
                 this.disable();
             }
         }
@@ -51,10 +51,10 @@ public class AutoLog
     @SubscribeEvent
     public void onReceivePacket(PacketEvent.Receive event) {
         SPacketBlockChange packet;
-        if (event.getPacket() instanceof SPacketBlockChange && this.bed.getValue().booleanValue() && (packet = event.getPacket()).getBlockState().getBlock() == Blocks.BED && AutoLog.mc.player.getDistanceSqToCenter(packet.getBlockPosition()) <= MathUtil.square(this.range.getValue().floatValue())) {
+        if (event.getPacket() instanceof SPacketBlockChange && this.bed.getValue(true).booleanValue() && (packet = event.getPacket()).getBlockState().getBlock() == Blocks.BED && AutoLog.mc.player.getDistanceSqToCenter(packet.getBlockPosition()) <= MathUtil.square(this.range.getValue(true).floatValue())) {
             OyVey.moduleManager.disableModule("AutoReconnect");
             AutoLog.mc.player.connection.sendPacket(new SPacketDisconnect(new TextComponentString("AutoLogged")));
-            if (this.logout.getValue().booleanValue()) {
+            if (this.logout.getValue(true).booleanValue()) {
                 this.disable();
             }
         }

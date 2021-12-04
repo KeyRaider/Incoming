@@ -37,14 +37,14 @@ public abstract class MixinItemRenderer {
 
     @Inject(method = {"renderFireInFirstPerson"}, at = {@At(value = "HEAD")}, cancellable = true)
     public void renderFireInFirstPersonHook(CallbackInfo info) {
-        if (NoRender.getInstance().isOn() && NoRender.getInstance().fire.getValue()) {
+        if (NoRender.getInstance().isOn() && NoRender.getInstance().fire.getValue(true)) {
             info.cancel();
         }
     }
 
     @Inject(method = {"renderSuffocationOverlay"}, at = {@At(value = "HEAD")}, cancellable = true)
     public void renderSuffocationOverlay(CallbackInfo ci) {
-        if (NoRender.getInstance().isOn() && NoRender.getInstance().blocks.getValue()) {
+        if (NoRender.getInstance().isOn() && NoRender.getInstance().blocks.getValue(true)) {
             ci.cancel();
         }
     }
@@ -52,17 +52,17 @@ public abstract class MixinItemRenderer {
     @Inject(method = "renderItemSide", at = @At("HEAD"))
     public void renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded, CallbackInfo ci) {
         if (ViewModel.INSTANCE.isEnabled()) {
-            GlStateManager.scale(ViewModel.INSTANCE.scaleX.getValue() / 100F, ViewModel.INSTANCE.scaleY.getValue() / 100F, ViewModel.INSTANCE.scaleZ.getValue() / 100F);
+            GlStateManager.scale(ViewModel.INSTANCE.scaleX.getValue(true) / 100F, ViewModel.INSTANCE.scaleY.getValue(true) / 100F, ViewModel.INSTANCE.scaleZ.getValue(true) / 100F);
             if (transform == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) {
-                GlStateManager.translate(ViewModel.INSTANCE.translateX.getValue() / 200F, ViewModel.INSTANCE.translateY.getValue() / 200F, ViewModel.INSTANCE.translateZ.getValue() / 200F);
-                GlStateManager.rotate(ViewModel.INSTANCE.rotateX.getValue(), 1, 0, 0);
-                GlStateManager.rotate(ViewModel.INSTANCE.rotateY.getValue(), 0, 1, 0);
-                GlStateManager.rotate(ViewModel.INSTANCE.rotateZ.getValue(), 0, 0, 1);
+                GlStateManager.translate(ViewModel.INSTANCE.translateX.getValue(true) / 200F, ViewModel.INSTANCE.translateY.getValue(true) / 200F, ViewModel.INSTANCE.translateZ.getValue(true) / 200F);
+                GlStateManager.rotate(ViewModel.INSTANCE.rotateX.getValue(true), 1, 0, 0);
+                GlStateManager.rotate(ViewModel.INSTANCE.rotateY.getValue(true), 0, 1, 0);
+                GlStateManager.rotate(ViewModel.INSTANCE.rotateZ.getValue(true), 0, 0, 1);
             } else if (transform == ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) {
-                GlStateManager.translate(-ViewModel.INSTANCE.translateX.getValue() / 200F, ViewModel.INSTANCE.translateY.getValue() / 200F, ViewModel.INSTANCE.translateZ.getValue() / 200F);
-                GlStateManager.rotate(-ViewModel.INSTANCE.rotateX.getValue(), 1, 0, 0);
-                GlStateManager.rotate(ViewModel.INSTANCE.rotateY.getValue(), 0, 1, 0);
-                GlStateManager.rotate(ViewModel.INSTANCE.rotateZ.getValue(), 0, 0, 1);
+                GlStateManager.translate(-ViewModel.INSTANCE.translateX.getValue(true) / 200F, ViewModel.INSTANCE.translateY.getValue(true) / 200F, ViewModel.INSTANCE.translateZ.getValue(true) / 200F);
+                GlStateManager.rotate(-ViewModel.INSTANCE.rotateX.getValue(true), 1, 0, 0);
+                GlStateManager.rotate(ViewModel.INSTANCE.rotateY.getValue(true), 0, 1, 0);
+                GlStateManager.rotate(ViewModel.INSTANCE.rotateZ.getValue(true), 0, 0, 1);
             }
         }
     }

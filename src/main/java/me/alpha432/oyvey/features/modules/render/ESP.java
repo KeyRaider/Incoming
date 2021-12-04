@@ -35,7 +35,7 @@ extends Module {
     private final Setting<Integer> boxAlpha = this.register(new Setting<Integer>("BoxAlpha", 120, 0, 255));
     private final Setting<Integer> alpha = this.register(new Setting<Integer>("Alpha", 255, 0, 255));
     private final Setting<Boolean> rainbow = this.register(new Setting<Boolean>("Rainbow", false));
-    private final Setting<Integer> rainbowhue = this.register(new Setting<Integer>("Brightness", Integer.valueOf(255), Integer.valueOf(0), Integer.valueOf(255), v -> this.rainbow.getValue()));
+    private final Setting<Integer> rainbowhue = this.register(new Setting<Integer>("Brightness", Integer.valueOf(255), Integer.valueOf(0), Integer.valueOf(255), v -> this.rainbow.getValue(true)));
 
     public ESP() {
         super("ESP", "Renders a nice ESP.", Module.Category.RENDER, false, false, false);
@@ -58,7 +58,7 @@ extends Module {
         AxisAlignedBB bb;
         Vec3d interp;
         int i;
-        if (this.items.getValue().booleanValue()) {
+        if (this.items.getValue(true).booleanValue()) {
             i = 0;
             for (Entity entity : ESP.mc.world.loadedEntityList) {
                 if (!(entity instanceof EntityItem) || !(ESP.mc.player.getDistanceSq(entity) < 2500.0)) continue;
@@ -73,18 +73,18 @@ extends Module {
                 GL11.glEnable((int)2848);
                 GL11.glHint((int)3154, (int)4354);
                 GL11.glLineWidth((float)1.0f);
-                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue().intValue() / 255.0f), (float)((float)this.green.getValue().intValue() / 255.0f), (float)((float)this.blue.getValue().intValue() / 255.0f), (float)((float)this.boxAlpha.getValue().intValue() / 255.0f));
+                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue(true).intValue() / 255.0f), (float)((float)this.green.getValue(true).intValue() / 255.0f), (float)((float)this.blue.getValue(true).intValue() / 255.0f), (float)((float)this.boxAlpha.getValue(true).intValue() / 255.0f));
                 GL11.glDisable((int)2848);
                 GlStateManager.depthMask((boolean)true);
                 GlStateManager.enableDepth();
                 GlStateManager.enableTexture2D();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
-                RenderUtil.drawBlockOutline(bb, this.rainbow.getValue() != false ? ColorUtil.rainbow(this.rainbowhue.getValue()) : new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), 1.0f);
+                RenderUtil.drawBlockOutline(bb, this.rainbow.getValue(true) != false ? ColorUtil.rainbow(this.rainbowhue.getValue(true)) : new Color(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true)), 1.0f);
                 if (++i < 50) continue;
             }
         }
-        if (this.xporbs.getValue().booleanValue()) {
+        if (this.xporbs.getValue(true).booleanValue()) {
             i = 0;
             for (Entity entity : ESP.mc.world.loadedEntityList) {
                 if (!(entity instanceof EntityXPOrb) || !(ESP.mc.player.getDistanceSq(entity) < 2500.0)) continue;
@@ -99,18 +99,18 @@ extends Module {
                 GL11.glEnable((int)2848);
                 GL11.glHint((int)3154, (int)4354);
                 GL11.glLineWidth((float)1.0f);
-                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue().intValue() / 255.0f), (float)((float)this.green.getValue().intValue() / 255.0f), (float)((float)this.blue.getValue().intValue() / 255.0f), (float)((float)this.boxAlpha.getValue().intValue() / 255.0f));
+                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue(true).intValue() / 255.0f), (float)((float)this.green.getValue(true).intValue() / 255.0f), (float)((float)this.blue.getValue(true).intValue() / 255.0f), (float)((float)this.boxAlpha.getValue(true).intValue() / 255.0f));
                 GL11.glDisable((int)2848);
                 GlStateManager.depthMask((boolean)true);
                 GlStateManager.enableDepth();
                 GlStateManager.enableTexture2D();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
-                RenderUtil.drawBlockOutline(bb, new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), 1.0f);
+                RenderUtil.drawBlockOutline(bb, new Color(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true)), 1.0f);
                 if (++i < 50) continue;
             }
         }
-        if (this.pearl.getValue().booleanValue()) {
+        if (this.pearl.getValue(true).booleanValue()) {
             i = 0;
             for (Entity entity : ESP.mc.world.loadedEntityList) {
                 if (!(entity instanceof EntityEnderPearl) || !(ESP.mc.player.getDistanceSq(entity) < 2500.0)) continue;
@@ -125,18 +125,18 @@ extends Module {
                 GL11.glEnable((int)2848);
                 GL11.glHint((int)3154, (int)4354);
                 GL11.glLineWidth((float)1.0f);
-                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue().intValue() / 255.0f), (float)((float)this.green.getValue().intValue() / 255.0f), (float)((float)this.blue.getValue().intValue() / 255.0f), (float)((float)this.boxAlpha.getValue().intValue() / 255.0f));
+                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue(true).intValue() / 255.0f), (float)((float)this.green.getValue(true).intValue() / 255.0f), (float)((float)this.blue.getValue(true).intValue() / 255.0f), (float)((float)this.boxAlpha.getValue(true).intValue() / 255.0f));
                 GL11.glDisable((int)2848);
                 GlStateManager.depthMask((boolean)true);
                 GlStateManager.enableDepth();
                 GlStateManager.enableTexture2D();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
-                RenderUtil.drawBlockOutline(bb, this.rainbow.getValue() != false ? ColorUtil.rainbow(this.rainbowhue.getValue()) : new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), 1.0f);
+                RenderUtil.drawBlockOutline(bb, this.rainbow.getValue(true) != false ? ColorUtil.rainbow(this.rainbowhue.getValue(true)) : new Color(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true)), 1.0f);
                 if (++i < 50) continue;
             }
         }
-        if (this.xpbottles.getValue().booleanValue()) {
+        if (this.xpbottles.getValue(true).booleanValue()) {
             i = 0;
             for (Entity entity : ESP.mc.world.loadedEntityList) {
                 if (!(entity instanceof EntityExpBottle) || !(ESP.mc.player.getDistanceSq(entity) < 2500.0)) continue;
@@ -151,14 +151,14 @@ extends Module {
                 GL11.glEnable((int)2848);
                 GL11.glHint((int)3154, (int)4354);
                 GL11.glLineWidth((float)1.0f);
-                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue().intValue() / 255.0f), (float)((float)this.green.getValue().intValue() / 255.0f), (float)((float)this.blue.getValue().intValue() / 255.0f), (float)((float)this.boxAlpha.getValue().intValue() / 255.0f));
+                RenderGlobal.renderFilledBox((AxisAlignedBB)bb, (float)((float)this.red.getValue(true).intValue() / 255.0f), (float)((float)this.green.getValue(true).intValue() / 255.0f), (float)((float)this.blue.getValue(true).intValue() / 255.0f), (float)((float)this.boxAlpha.getValue(true).intValue() / 255.0f));
                 GL11.glDisable((int)2848);
                 GlStateManager.depthMask((boolean)true);
                 GlStateManager.enableDepth();
                 GlStateManager.enableTexture2D();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
-                RenderUtil.drawBlockOutline(bb, this.rainbow.getValue() != false ? ColorUtil.rainbow(this.rainbowhue.getValue()) : new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), 1.0f);
+                RenderUtil.drawBlockOutline(bb, this.rainbow.getValue(true) != false ? ColorUtil.rainbow(this.rainbowhue.getValue(true)) : new Color(this.red.getValue(true), this.green.getValue(true), this.blue.getValue(true), this.alpha.getValue(true)), 1.0f);
                 if (++i < 50) continue;
             }
         }

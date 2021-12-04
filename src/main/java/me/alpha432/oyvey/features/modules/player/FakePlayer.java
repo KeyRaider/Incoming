@@ -24,7 +24,7 @@ public class FakePlayer extends Module {
             Random random = new Random();
             otherPlayer.moveForward = mc.player.moveForward + (random.nextInt(5) / 10F);
             otherPlayer.moveStrafing = mc.player.moveStrafing + (random.nextInt(5) / 10F);
-            if (hollow.getValue()) travel(otherPlayer.moveStrafing, otherPlayer.moveVertical, otherPlayer.moveForward);
+            if (hollow.getValue(true)) travel(otherPlayer.moveStrafing, otherPlayer.moveVertical, otherPlayer.moveForward);
         }
     }
 

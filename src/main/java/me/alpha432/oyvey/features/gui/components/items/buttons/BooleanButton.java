@@ -13,7 +13,7 @@ import java.awt.*;
 public class BooleanButton
         extends Button {
     private final Setting setting;
-    int color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().green.getValue()).getRGB();
+    int color = new Color(ClickGui.getInstance().red.getValue(true), ClickGui.getInstance().blue.getValue(true), ClickGui.getInstance().green.getValue(true)).getRGB();
 
     public BooleanButton(Setting setting) {
         super(setting.getName());
@@ -23,7 +23,7 @@ public class BooleanButton
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? OyVey.colorManager.getColorWithAlpha(OyVey.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : OyVey.colorManager.getColorWithAlpha(OyVey.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())) : (!this.isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515));
+        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? OyVey.colorManager.getColorWithAlpha(OyVey.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue(true)) : OyVey.colorManager.getColorWithAlpha(OyVey.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue(true))) : (!this.isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515));
         OyVey.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) OyVeyGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
     }
 
@@ -47,11 +47,11 @@ public class BooleanButton
 
     @Override
     public void toggle() {
-        this.setting.setValue(!((Boolean) this.setting.getValue()));
+        this.setting.setValue(!((Boolean) this.setting.getValue(true)));
     }
 
     @Override
     public boolean getState() {
-        return (Boolean) this.setting.getValue();
+        return (Boolean) this.setting.getValue(true);
     }
 }

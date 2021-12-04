@@ -49,7 +49,7 @@ public class Replenish extends Module {
         if (Replenish.mc.currentScreen != null) {
             return;
         }
-        if (!this.timer.passedMs(this.delay.getValue() * 1000)) {
+        if (!this.timer.passedMs(this.delay.getValue(true) * 1000)) {
             return;
         }
         for (int l_I = 0; l_I < 9; ++l_I) {
@@ -71,13 +71,13 @@ public class Replenish extends Module {
         if (l_Stack.getCount() >= l_Stack.getMaxStackSize()) {
             return false;
         }
-        if (l_Stack.getItem().equals(Items.GOLDEN_APPLE) && l_Stack.getCount() >= this.gapStack.getValue()) {
+        if (l_Stack.getItem().equals(Items.GOLDEN_APPLE) && l_Stack.getCount() >= this.gapStack.getValue(true)) {
             return false;
         }
-        if (l_Stack.getItem().equals(Items.EXPERIENCE_BOTTLE) && l_Stack.getCount() > this.xpStackAt.getValue()) {
+        if (l_Stack.getItem().equals(Items.EXPERIENCE_BOTTLE) && l_Stack.getCount() > this.xpStackAt.getValue(true)) {
             return false;
         }
-        if (l_Stack.getItem().equals(Items.END_CRYSTAL) && l_Stack.getCount() > this.crystalStack.getValue()) {
+        if (l_Stack.getItem().equals(Items.END_CRYSTAL) && l_Stack.getCount() > this.crystalStack.getValue(true)) {
             return false;
         }
         for (int l_I = 9; l_I < 36; ++l_I) {

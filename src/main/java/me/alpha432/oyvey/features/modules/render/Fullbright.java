@@ -25,17 +25,17 @@ public class Fullbright
 
     @Override
     public void onUpdate() {
-        if (this.mode.getValue() == Mode.GAMMA) {
+        if (this.mode.getValue(true) == Mode.GAMMA) {
             Fullbright.mc.gameSettings.gammaSetting = 1000.0f;
         }
-        if (this.mode.getValue() == Mode.POTION) {
+        if (this.mode.getValue(true) == Mode.POTION) {
             Fullbright.mc.player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 5210));
         }
     }
 
     @Override
     public void onDisable() {
-        if (this.mode.getValue() == Mode.POTION) {
+        if (this.mode.getValue(true) == Mode.POTION) {
             Fullbright.mc.player.removePotionEffect(MobEffects.NIGHT_VISION);
         }
         Fullbright.mc.gameSettings.gammaSetting = this.previousSetting;
@@ -43,7 +43,7 @@ public class Fullbright
 
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
-        if (event.getStage() == 0 && event.getPacket() instanceof SPacketEntityEffect && this.effects.getValue()) {
+        if (event.getStage() == 0 && event.getPacket() instanceof SPacketEntityEffect && this.effects.getValue(true)) {
             SPacketEntityEffect packet = event.getPacket();
             if (Fullbright.mc.player != null && packet.getEntityId() == Fullbright.mc.player.getEntityId() && (packet.getEffectId() == 9 || packet.getEffectId() == 15)) {
                 event.setCanceled(true);

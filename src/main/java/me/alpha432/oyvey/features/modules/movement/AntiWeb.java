@@ -20,16 +20,16 @@ public class AntiWeb extends Module {
 
     @Override
     public void onEnable() {
-        this.speed = timerSpeed.getValue();
+        this.speed = timerSpeed.getValue(true);
     }
 
 
     @Override
     public void onUpdate() {
 
-        if (HoleOnly.getValue()) {
+        if (HoleOnly.getValue(true)) {
             if (mc.player.isInWeb && EntityUtil.isInHole(mc.player)) {
-                AntiWeb.mc.timer.tickLength = 50.0f / ((this.timerSpeed.getValue() == 0.0f) ? 0.1f : this.timerSpeed.getValue());
+                AntiWeb.mc.timer.tickLength = 50.0f / ((this.timerSpeed.getValue(true) == 0.0f) ? 0.1f : this.timerSpeed.getValue(true));
             } else {
                 AntiWeb.mc.timer.tickLength = 50.0f;
             }
@@ -37,9 +37,9 @@ public class AntiWeb extends Module {
                 AntiWeb.mc.timer.tickLength = 50.0f;
             }
         }
-        if (!HoleOnly.getValue()) {
+        if (!HoleOnly.getValue(true)) {
             if (mc.player.isInWeb) {
-                AntiWeb.mc.timer.tickLength = 50.0f / ((this.timerSpeed.getValue() == 0.0f) ? 0.1f : this.timerSpeed.getValue());
+                AntiWeb.mc.timer.tickLength = 50.0f / ((this.timerSpeed.getValue(true) == 0.0f) ? 0.1f : this.timerSpeed.getValue(true));
 
             } else {
                 AntiWeb.mc.timer.tickLength = 50.0f;

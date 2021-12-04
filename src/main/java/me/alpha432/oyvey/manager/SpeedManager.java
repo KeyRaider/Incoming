@@ -54,7 +54,7 @@ public class SpeedManager
             this.didJumpLastTick = false;
             this.lastJumpSpeed = 0.0;
         }
-        if (HUD.getInstance().speed.getValue()) {
+        if (HUD.getInstance().speed.getValue(true)) {
             this.updatePlayers();
         }
     }

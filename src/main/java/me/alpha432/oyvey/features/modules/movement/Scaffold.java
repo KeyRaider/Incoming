@@ -119,7 +119,7 @@ public class Scaffold
                 this.timer.reset();
             }
         }
-        if (this.rotation.getValue()) {
+        if (this.rotation.getValue(true)) {
             float[] angle = MathUtil.calcAngle(Scaffold.mc.player.getPositionEyes(mc.getRenderPartialTicks()), new Vec3d((float)pos.getX() + 0.5f, (float)pos.getY() - 0.5f, (float)pos.getZ() + 0.5f));
             Scaffold.mc.player.connection.sendPacket(new CPacketPlayer.Rotation(angle[0], (float)MathHelper.normalizeAngle((int)angle[1], 360), Scaffold.mc.player.onGround));
         }

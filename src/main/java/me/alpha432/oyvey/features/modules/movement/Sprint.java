@@ -28,14 +28,14 @@ public class Sprint
 
     @SubscribeEvent
     public void onSprint(MoveEvent event) {
-        if (event.getStage() == 1 && this.mode.getValue() == Mode.RAGE && (Sprint.mc.player.movementInput.moveForward != 0.0f || Sprint.mc.player.movementInput.moveStrafe != 0.0f)) {
+        if (event.getStage() == 1 && this.mode.getValue(true) == Mode.RAGE && (Sprint.mc.player.movementInput.moveForward != 0.0f || Sprint.mc.player.movementInput.moveStrafe != 0.0f)) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public void onUpdate() {
-        switch (this.mode.getValue()) {
+        switch (this.mode.getValue(true)) {
             case RAGE: {
                 if (!Sprint.mc.gameSettings.keyBindForward.isKeyDown() && !Sprint.mc.gameSettings.keyBindBack.isKeyDown() && !Sprint.mc.gameSettings.keyBindLeft.isKeyDown() && !Sprint.mc.gameSettings.keyBindRight.isKeyDown() || Sprint.mc.player.isSneaking() || Sprint.mc.player.collidedHorizontally || (float) Sprint.mc.player.getFoodStats().getFoodLevel() <= 6.0f)
                     break;

@@ -17,11 +17,11 @@ public class AntiHunger extends Module {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        if (this.ground.getValue() && event.getPacket() instanceof CPacketPlayer) {
+        if (this.ground.getValue(true) && event.getPacket() instanceof CPacketPlayer) {
             CPacketPlayer packet = event.getPacket();
             packet.onGround = (mc.player.fallDistance >= 0.0F || mc.playerController.isHittingBlock);
         }
-        if (this.cancelSprint.getValue() && event.getPacket() instanceof CPacketEntityAction) {
+        if (this.cancelSprint.getValue(true) && event.getPacket() instanceof CPacketEntityAction) {
             CPacketEntityAction packet = event.getPacket();
             if (packet.getAction() == CPacketEntityAction.Action.START_SPRINTING || packet.getAction() == CPacketEntityAction.Action.STOP_SPRINTING)
                 event.setCanceled(true);

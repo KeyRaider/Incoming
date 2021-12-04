@@ -16,8 +16,8 @@ public class ChatModifier
     public Setting<Boolean> clean = this.register(new Setting<Boolean>("CleanChat", Boolean.valueOf(false), "Cleans your chat"));
     public Setting<Boolean> infinite = this.register(new Setting<Boolean>("Infinite", Boolean.valueOf(false), "Makes your chat infinite."));
     public Setting<Boolean> autoQMain = this.register(new Setting<Boolean>("AutoQMain", Boolean.valueOf(false), "Spams AutoQMain"));
-    public Setting<Boolean> qNotification = this.register(new Setting<Object>("QNotification", Boolean.valueOf(false), v -> this.autoQMain.getValue()));
-    public Setting<Integer> qDelay = this.register(new Setting<Object>("QDelay", Integer.valueOf(9), Integer.valueOf(1), Integer.valueOf(90), v -> this.autoQMain.getValue()));
+    public Setting<Boolean> qNotification = this.register(new Setting<Object>("QNotification", Boolean.valueOf(false), v -> this.autoQMain.getValue(true)));
+    public Setting<Integer> qDelay = this.register(new Setting<Object>("QDelay", Integer.valueOf(9), Integer.valueOf(1), Integer.valueOf(90), v -> this.autoQMain.getValue(true)));
     private final Timer timer = new Timer();
     private static ChatModifier INSTANCE = new ChatModifier();
 
@@ -39,11 +39,11 @@ public class ChatModifier
 
     @Override
     public void onUpdate() {
-        if (this.autoQMain.getValue().booleanValue()) {
+        if (this.autoQMain.getValue(true).booleanValue()) {
             if (!this.shouldSendMessage((EntityPlayer)ChatModifier.mc.player)) {
                 return;
             }
-            if (this.qNotification.getValue().booleanValue()) {
+            if (this.qNotification.getValue(true).booleanValue()) {
                 Command.sendMessage("<AutoQueueMain> Sending message: /queue main");
             }
             ChatModifier.mc.player.sendChatMessage("/queue main");
@@ -59,7 +59,7 @@ public class ChatModifier
             if (s.startsWith("/")) {
                 return;
             }
-            switch (this.suffix.getValue()) {
+            switch (this.suffix.getValue(true)) {
                 case INCOMING: {
                     s = s + " ||| Incoming";
                     break;
@@ -82,7 +82,7 @@ public class ChatModifier
         if (player.dimension != 1) {
             return false;
         }
-        if (!this.timer.passedS(this.qDelay.getValue().intValue())) {
+        if (!this.timer.passedS(this.qDelay.getValue(true).intValue())) {
             return false;
         }
         return player.getPosition().equals((Object)new Vec3i(0, 240, 0));

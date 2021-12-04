@@ -37,10 +37,10 @@ public class CSGOWatermark extends Module {
         message = "Incoming v1.2.6 | " + mc.player.getName() + " | " + OyVey.serverManager.getPing() + "ms";
         Integer textWidth = mc.fontRenderer.getStringWidth(message); // taken from wurst+ 3
         Integer textHeight = mc.fontRenderer.FONT_HEIGHT; // taken from wurst+ 3
-        RenderUtil.drawRectangleCorrectly(X.getValue() - 4, Y.getValue() - 4, textWidth + 16, textHeight + 12, ColorUtil.toRGBA(22, 22, 22, 255));
-        RenderUtil.drawRectangleCorrectly(X.getValue(), Y.getValue(), textWidth + 4, textHeight + 4, ColorUtil.toRGBA(0, 0, 0, 255));
-        RenderUtil.drawRectangleCorrectly(X.getValue(), Y.getValue(), textWidth + 8, textHeight + 4, ColorUtil.toRGBA(0, 0, 0, 255));
-        RenderUtil.drawRectangleCorrectly(X.getValue(), Y.getValue(), textWidth + 8, 1, ColorUtil.rainbow(this.delay.getValue()).hashCode());
-        mc.fontRenderer.drawString(message, X.getValue() + 3, Y.getValue() + 3, ColorUtil.toRGBA(255, 255, 255, 255), false);
+        RenderUtil.drawRectangleCorrectly(X.getValue(true) - 4, Y.getValue(true) - 4, textWidth + 16, textHeight + 12, ColorUtil.toRGBA(22, 22, 22, 255));
+        RenderUtil.drawRectangleCorrectly(X.getValue(true), Y.getValue(true), textWidth + 4, textHeight + 4, ColorUtil.toRGBA(0, 0, 0, 255));
+        RenderUtil.drawRectangleCorrectly(X.getValue(true), Y.getValue(true), textWidth + 8, textHeight + 4, ColorUtil.toRGBA(0, 0, 0, 255));
+        RenderUtil.drawRectangleCorrectly(X.getValue(true), Y.getValue(true), textWidth + 8, 1, ColorUtil.rainbow(this.delay.getValue(true)).hashCode());
+        mc.fontRenderer.drawString(message, X.getValue(true) + 3, Y.getValue(true) + 3, ColorUtil.toRGBA(255, 255, 255, 255), false);
     }
 }

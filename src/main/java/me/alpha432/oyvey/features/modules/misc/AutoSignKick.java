@@ -42,7 +42,7 @@ public class AutoSignKick extends Module {
     public void onUpdate() {
         for (TileEntity tileEntity : mc.world.loadedTileEntityList) {
             if (!(tileEntity instanceof TileEntitySign)) continue;
-            if (!(mc.player.getDistanceSq(tileEntity.getPos()) <= MathUtill.square(range.getValue()) )) continue;
+            if (!(mc.player.getDistanceSq(tileEntity.getPos()) <= MathUtill.square(range.getValue(true)) )) continue;
             Command.sendMessage("Sign located at X: " + tileEntity.getPos().getX() + ", Y: " + tileEntity.getPos().getY() + ", Z: " + tileEntity.getPos().getZ());
             BlockPos posTile = tileEntity.getPos();
             if (!hadBreak) {
@@ -60,7 +60,7 @@ public class AutoSignKick extends Module {
     }
 
     private void axeSwitch() {
-        if (switchTimer.passedMs(switchDelay.getValue().longValue() * 3)) {
+        if (switchTimer.passedMs(switchDelay.getValue(true).longValue() * 3)) {
             InventoryUtil.switchToHotbarSlot(ItemAxe.class, false);
             Command.sendMessage("Switched to Axe");
             switchTimer.reset();
@@ -68,7 +68,7 @@ public class AutoSignKick extends Module {
     }
 
     private void mineBlock(BlockPos pos) {
-        if (mineTimer.passedMs(mineDelay.getValue().longValue() * 3)) {
+        if (mineTimer.passedMs(mineDelay.getValue(true).longValue() * 3)) {
             mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, pos, EnumFacing.UP));
             Command.sendMessage("Mined");
             mineTimer.reset();
@@ -76,7 +76,7 @@ public class AutoSignKick extends Module {
     }
 
     private void place(BlockPos pos) {
-        if (placeTimer.passedMs(placeDelay.getValue().longValue() * 3)) {
+        if (placeTimer.passedMs(placeDelay.getValue(true).longValue() * 3)) {
             BlockUtil.placeBlockSmartRotate(pos, EnumHand.MAIN_HAND, true, true, false);
             Command.sendMessage("Placed sign!");
             placeTimer.reset();

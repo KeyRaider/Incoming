@@ -52,12 +52,12 @@ public class Component
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         float totalItemHeight = this.open ? this.getTotalItemHeight() - 2.0f : 0.0f;
-        int color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().green.getValue()).getRGB();
+        int color = new Color(ClickGui.getInstance().red.getValue(true), ClickGui.getInstance().green.getValue(true), ClickGui.getInstance().blue.getValue(true)).getRGB();
         RenderUtil.drawRect(this.x, (float) this.y - 1.5f, this.x + this.width, this.y + this.height - 6, color);
         if (this.open) {
             RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, 0x77000000);
-            if (ClickGui.getInstance().outline.getValue()) {
-                if (ClickGui.getInstance().rainbowRolling.getValue()) {
+            if (ClickGui.getInstance().outline.getValue(true)) {
+                if (ClickGui.getInstance().rainbowRolling.getValue(true)) {
                     GlStateManager.disableTexture2D();
                     GlStateManager.enableBlend();
                     GlStateManager.disableAlpha();

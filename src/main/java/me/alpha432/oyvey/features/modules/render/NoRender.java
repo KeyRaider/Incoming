@@ -40,7 +40,7 @@ public class NoRender
 
     @SubscribeEvent
     public void onPacketReceive(final PacketEvent.Receive event) {
-        if (event.getPacket() instanceof SPacketExplosion && this.explosion.getValue()) {
+        if (event.getPacket() instanceof SPacketExplosion && this.explosion.getValue(true)) {
             event.setCanceled(true);
         }
     }

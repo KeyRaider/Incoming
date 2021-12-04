@@ -46,7 +46,7 @@ extends Module {
         if (OyVey.moduleManager.getModuleByClass(Speed.class).isEnabled()) {
             return;
         }
-        if (this.mode.getValue() == Mode.Normal) {
+        if (this.mode.getValue(true) == Mode.Normal) {
             double[] dir = Step.forward(0.1);
             boolean twofive = false;
             boolean two = false;
@@ -66,7 +66,7 @@ extends Module {
             }
             if (Step.mc.player.collidedHorizontally && (Step.mc.player.moveForward != 0.0f || Step.mc.player.moveStrafing != 0.0f) && Step.mc.player.onGround) {
                 int i;
-                if (one && this.height.getValue() >= 1.0) {
+                if (one && this.height.getValue(true) >= 1.0) {
                     double[] oneOffset = new double[]{0.42, 0.753};
                     for (i = 0; i < oneOffset.length; ++i) {
                         Step.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(Step.mc.player.posX, Step.mc.player.posY + oneOffset[i], Step.mc.player.posZ, Step.mc.player.onGround));
@@ -74,7 +74,7 @@ extends Module {
                     Step.mc.player.setPosition(Step.mc.player.posX, Step.mc.player.posY + 1.0, Step.mc.player.posZ);
                     this.ticks = 1;
                 }
-                if (onefive && this.height.getValue() >= 1.5) {
+                if (onefive && this.height.getValue(true) >= 1.5) {
                     double[] oneFiveOffset = new double[]{0.42, 0.75, 1.0, 1.16, 1.23, 1.2};
                     for (i = 0; i < oneFiveOffset.length; ++i) {
                         Step.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(Step.mc.player.posX, Step.mc.player.posY + oneFiveOffset[i], Step.mc.player.posZ, Step.mc.player.onGround));
@@ -82,7 +82,7 @@ extends Module {
                     Step.mc.player.setPosition(Step.mc.player.posX, Step.mc.player.posY + 1.5, Step.mc.player.posZ);
                     this.ticks = 1;
                 }
-                if (two && this.height.getValue() >= 2.0) {
+                if (two && this.height.getValue(true) >= 2.0) {
                     double[] twoOffset = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43};
                     for (i = 0; i < twoOffset.length; ++i) {
                         Step.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(Step.mc.player.posX, Step.mc.player.posY + twoOffset[i], Step.mc.player.posZ, Step.mc.player.onGround));
@@ -90,7 +90,7 @@ extends Module {
                     Step.mc.player.setPosition(Step.mc.player.posX, Step.mc.player.posY + 2.0, Step.mc.player.posZ);
                     this.ticks = 2;
                 }
-                if (twofive && this.height.getValue() >= 2.5) {
+                if (twofive && this.height.getValue(true) >= 2.5) {
                     double[] twoFiveOffset = new double[]{0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869, 2.019, 1.907};
                     for (i = 0; i < twoFiveOffset.length; ++i) {
                         Step.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(Step.mc.player.posX, Step.mc.player.posY + twoFiveOffset[i], Step.mc.player.posZ, Step.mc.player.onGround));
@@ -100,9 +100,9 @@ extends Module {
                 }
             }
         }
-        if (this.mode.getValue() == Mode.Vanilla) {
+        if (this.mode.getValue(true) == Mode.Vanilla) {
             DecimalFormat df = new DecimalFormat("#");
-            Step.mc.player.stepHeight = Float.parseFloat(df.format(this.height.getValue()));
+            Step.mc.player.stepHeight = Float.parseFloat(df.format(this.height.getValue(true)));
         }
     }
 

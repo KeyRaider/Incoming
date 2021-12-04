@@ -27,10 +27,10 @@ extends Module {
         if (Animations.nullCheck()) {
             return;
         }
-        if (this.swing.getValue() == Swing.Offhand) {
+        if (this.swing.getValue(true) == Swing.Offhand) {
             Animations.mc.player.swingingHand = EnumHand.OFF_HAND;
         }
-        if (this.mode.getValue() == Mode.High && (double)Animations.mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
+        if (this.mode.getValue(true) == Mode.High && (double)Animations.mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
             Animations.mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
             Animations.mc.entityRenderer.itemRenderer.itemStackMainHand = Animations.mc.player.getHeldItemMainhand();
         }
@@ -38,14 +38,14 @@ extends Module {
 
     @Override
     public void onEnable() {
-        if (this.slow.getValue().booleanValue()) {
+        if (this.slow.getValue(true).booleanValue()) {
             Animations.mc.player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 255000));
         }
     }
 
     @Override
     public void onDisable() {
-        if (this.slow.getValue().booleanValue()) {
+        if (this.slow.getValue(true).booleanValue()) {
             Animations.mc.player.removePotionEffect(MobEffects.MINING_FATIGUE);
         }
     }
@@ -55,7 +55,7 @@ extends Module {
         Object raw = event.getPacket();
         if (raw instanceof CPacketAnimation) {
             CPacketAnimation packet = (CPacketAnimation)raw;
-            if (this.swing.getValue() == Swing.Packet) {
+            if (this.swing.getValue(true) == Swing.Packet) {
                 event.setCanceled(true);
             }
         }

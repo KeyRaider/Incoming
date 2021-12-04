@@ -46,14 +46,14 @@ public class FriendCommand
                 case "add": {
                     OyVey.friendManager.addFriend(commands[1]);
                     FriendCommand.sendMessage(ChatFormatting.GREEN + commands[1] + " has been friended");
-                    if (FriendSettings.getInstance().notify.getValue()) {
+                    if (FriendSettings.getInstance().notify.getValue(true)) {
                         mc.player.connection.sendPacket(new CPacketChatMessage("/w " + commands[1] + " I just added you to my friends list on Quantum!"));
                     }
                     return;
                 }
                 case "del": {
                     OyVey.friendManager.removeFriend(commands[1]);
-                    if (FriendSettings.getInstance().notify.getValue()) {
+                    if (FriendSettings.getInstance().notify.getValue(true)) {
                         mc.player.connection.sendPacket(new CPacketChatMessage("/w " + commands[1] + " I just removed you from my friends list on Quantum!"));
                     }
                     FriendCommand.sendMessage(ChatFormatting.RED + commands[1] + " has been unfriended");

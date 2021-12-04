@@ -63,7 +63,7 @@ extends Module {
     public void onChatRecieved(ClientChatReceivedEvent event) {
         try {
             String message = event.getMessage().getUnformattedText();
-            if (this.numbers.getValue().booleanValue()) {
+            if (this.numbers.getValue(true).booleanValue()) {
                 if (message.matches(".*\\d.*")) {
                     this.out.write(message);
                     this.out.write(ChatLogger.endLine());

@@ -27,10 +27,10 @@ class Lawnmower extends Module {
 
     @SubscribeEvent
     public void onUpdateWalkingPlayer ( UpdateWalkingPlayerEvent event ) {
-        for (BlockPos pos : BlockUtil.getSphere(mc.player.getPosition(), playerRange.getValue(), playerHeight.getValue(), false, true, 0)) {
+        for (BlockPos pos : BlockUtil.getSphere(mc.player.getPosition(), playerRange.getValue(true), playerHeight.getValue(true), false, true, 0)) {
             if (!check(pos)) continue;
             if (pos != null) {
-                if (rotate.getValue()) {
+                if (rotate.getValue(true)) {
                     float[] angle = MathUtil.calcAngle ( mc.player.getPositionEyes ( mc.getRenderPartialTicks ( ) ) , new Vec3d( (float) pos.getX ( )  , (float) pos.getY ( ) , (float) pos.getZ ( )  ) );
                     OyVey.rotationManager.setPlayerRotations ( angle[0] , angle[1] );
                 }

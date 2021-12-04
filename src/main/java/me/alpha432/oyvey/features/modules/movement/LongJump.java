@@ -63,7 +63,7 @@ class LongJump
 
     @SubscribeEvent
     public void onPacketReceive(final PacketEvent.Receive event) {
-        if (this.lagOff.getValue() && event.getPacket() instanceof SPacketPlayerPosLook) {
+        if (this.lagOff.getValue(true) && event.getPacket() instanceof SPacketPlayerPosLook) {
             this.disable();
         }
     }
@@ -73,13 +73,13 @@ class LongJump
         if (event.getStage() != 0) {
             return;
         }
-        if (!this.timer.passedMs(this.timeout.getValue())) {
+        if (!this.timer.passedMs(this.timeout.getValue(true))) {
             event.setX(0.0);
             event.setY(0.0);
             event.setZ(0.0);
             return;
         }
-        if (this.step.getValue()) {
+        if (this.step.getValue(true)) {
             LongJump.mc.player.stepHeight = 0.6f;
         }
         this.doVirtue(event);
@@ -90,7 +90,7 @@ class LongJump
         if (Feature.fullNullCheck() || event.phase != TickEvent.Phase.START) {
             return;
         }
-        if (this.mode.getValue() == Mode.TICK) {
+        if (this.mode.getValue(true) == Mode.TICK) {
             this.doNormal(null);
         }
     }
@@ -100,7 +100,7 @@ class LongJump
         if (event.getStage() != 0) {
             return;
         }
-        if (!this.timer.passedMs(this.timeout.getValue())) {
+        if (!this.timer.passedMs(this.timeout.getValue(true))) {
             event.setCanceled(true);
             return;
         }
@@ -108,11 +108,11 @@ class LongJump
     }
 
     private void doNormal(final UpdateWalkingPlayerEvent event) {
-        if (this.autoOff.getValue() && this.beganJump && LongJump.mc.player.onGround) {
+        if (this.autoOff.getValue(true) && this.beganJump && LongJump.mc.player.onGround) {
             this.disable();
             return;
         }
-        switch (this.mode.getValue()) {
+        switch (this.mode.getValue(true)) {
             case VIRTUE: {
                 if (LongJump.mc.player.moveForward != 0.0f || LongJump.mc.player.moveStrafing != 0.0f) {
                     final double xDist = LongJump.mc.player.posX - LongJump.mc.player.prevPosX;
@@ -231,9 +231,9 @@ class LongJump
     }
 
     private void doVirtue(final MoveEvent event) {
-        if (this.mode.getValue() == Mode.VIRTUE && (LongJump.mc.player.moveForward != 0.0f || (LongJump.mc.player.moveStrafing != 0.0f && !EntityUtil.isOnLiquid() && !EntityUtil.isInLiquid()))) {
+        if (this.mode.getValue(true) == Mode.VIRTUE && (LongJump.mc.player.moveForward != 0.0f || (LongJump.mc.player.moveStrafing != 0.0f && !EntityUtil.isOnLiquid() && !EntityUtil.isInLiquid()))) {
             if (this.stage == 0) {
-                this.moveSpeed = this.boost.getValue() * this.getBaseMoveSpeed();
+                this.moveSpeed = this.boost.getValue(true) * this.getBaseMoveSpeed();
             } else if (this.stage == 1) {
                 event.setY(LongJump.mc.player.motionY = 0.42);
                 this.moveSpeed *= 2.149;
