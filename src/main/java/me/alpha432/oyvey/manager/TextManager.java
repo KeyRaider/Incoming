@@ -41,7 +41,7 @@ public class TextManager
             if (shadow) {
                 this.customFont.drawStringWithShadow(text, x, y, color);
             } else {
-                this.customFont.drawString(text, x, y, color);
+               this.customFont.drawString(text, x, y, color);
             }
             return;
         }
