@@ -45,8 +45,7 @@ public class ModuleManager
        this.modules.add(new Logo());
        this.modules.add(new ModuleTools());
        this.modules.add(new NickHider());
-       //troll
-       this.modules.add(new FontMod());       
+       //troll       
        this.modules.add(new PenisESP());
        this.modules.add(new TestModule());
        //combat
