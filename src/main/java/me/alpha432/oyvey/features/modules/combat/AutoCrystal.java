@@ -293,10 +293,10 @@ public class AutoCrystal
             }
             this.realTarget = this.target;
 
-            if (this.hotBarSlot != -1 && this.autoswitch.getValue() && !AutoCrystal.mc.player.isPotionActive(MobEffects.WEAKNESS) && this.switchmode.getValue() == SwitchMode.Normal && !this.silentSwitch.getValue()) {
+            if (switchmode.getValue() == SwitchMode.Normal)
+                AutoCrystal.mc.player.isPotionActive(MobEffects.WEAKNESS);{
                 AutoCrystal.mc.player.inventory.currentItem = this.hotBarSlot;
             }
-
 
             int slot = InventoryUtil.findHotbarBlock(ItemEndCrystal.class);
             int old = mc.player.inventory.currentItem;
