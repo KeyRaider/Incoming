@@ -45,6 +45,7 @@ public class ModuleManager
        this.modules.add(new Logo());
        this.modules.add(new ModuleTools());
        this.modules.add(new NickHider());
+       this.modules.add(new RPC());
        //troll
        this.modules.add(new FontMod());       
        this.modules.add(new PenisESP());
@@ -76,7 +77,8 @@ public class ModuleManager
        this.modules.add(new NoAFK());
        this.modules.add(new NewChunks());     
        this.modules.add(new NoSlow2b());
-       this.modules.add(new QueueSkip());       
+       this.modules.add(new QueueSkip());   
+//       this.modules.add(new Speed2b2t());
        //misc
        this.modules.add(new AntiDesync());
        this.modules.add(new AntiPackets());

@@ -24,5 +24,6 @@
     "MixinRenderPlayer",
     "MixinVisGraph",
     "MixinWorld"
+    "accessor.ICPacketPlayer"
   ]
 }
